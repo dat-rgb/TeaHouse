@@ -13,11 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            DanhMucSanPhamSeeder::class,
+            SanPhamSeeder::class,
+            ToppingSeeder::class, // Đảm bảo toppings được tạo trước
+            SizeSeeder::class,
+            SanPhamSizeSeeder::class,
+            SanPhamToppingSeeder::class, // Sau đó mới gán topping cho sản phẩm
         ]);
     }
 }
