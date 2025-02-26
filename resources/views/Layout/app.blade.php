@@ -45,15 +45,27 @@
                     <div class="navbar-nav ms-auto">
                         <a href="{{ route('home.index') }}" class="nav-item nav-link active">Trang Chủ</a>
                         <div class="nav-item dropdown">
-                            <a href="{{ route('sanpham.index') }}" class="nav-link">Sản phẩm <i class="bi bi-chevron-down"></i></a>
-                            <div class="dropdown-menu bg-light rounded-0 m-0">
-                                <!-- Vòng lặp để hiển thị các danh mục -->
-                                <a href="" class="dropdown-item">Item 1</a>
-                                <a href="" class="dropdown-item">Item 2</a>
-                                <a href="" class="dropdown-item">Item 3</a>
-                                <a href="" class="dropdown-item">Item 4</a>
-                            </div>
-                        </div>
+    <a href="#" class="nav-link">Sản phẩm <i class="bi bi-chevron-down"></i></a>
+    <ul class="dropdown-menu bg-light rounded-0 m-0">
+        @foreach($danhMucSanPhams as $danhMuc)
+            @if($danhMuc['children'])
+                <li class="dropdown">
+                    <a href="#" class="dropdown-item dropdown-toggle">
+                        {{ $danhMuc['ten_danh_muc'] }}
+                    </a>
+                    <ul class="dropdown-menu bg-light rounded-0 m-0">
+                        @foreach($danhMuc['children'] as $child)
+                            <li><a href="#" class="dropdown-item">{{ $child['ten_danh_muc'] }}</a></li>
+                        @endforeach
+                    </ul>
+                </li>
+            @else
+                <li><a href="#" class="dropdown-item">{{ $danhMuc['ten_danh_muc'] }}</a></li>
+            @endif
+        @endforeach
+    </ul>
+</div>
+
                         <a href="" class="nav-item nav-link">Thực đơn</a>
                         <a href="" class="nav-item nav-link">Giới thiệu</a>
                         <div class="nav-item dropdown">

@@ -561,3 +561,15 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+}
+
+
+
+
+
