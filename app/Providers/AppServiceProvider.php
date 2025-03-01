@@ -21,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        view::composer(['Layout.app', 'sanpham.index'], DanhMucComposer::class);
+        view::composer(['Layout.app', 'sanpham.index', 'SanPham.subLayout'], DanhMucComposer::class);
     }
 }
