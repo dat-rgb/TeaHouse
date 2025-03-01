@@ -16,10 +16,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DanhMucSanPhamSeeder::class,
             SanPhamSeeder::class,
-            ToppingSeeder::class, // Đảm bảo toppings được tạo trước
+            ToppingSeeder::class, 
             SizeSeeder::class,
             SanPhamSizeSeeder::class,
-            SanPhamToppingSeeder::class, // Sau đó mới gán topping cho sản phẩm
         ]);
     }
 }
