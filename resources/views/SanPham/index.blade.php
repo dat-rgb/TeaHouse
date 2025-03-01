@@ -20,29 +20,30 @@
         <!-- Danh sách sản phẩm -->
         <div class="col-lg-9">
             <div class="row">
-                @php
-                    $products = [
-                        ['name' => 'Trà Sữa Matcha', 'price' => '50,000đ', 'image' => 'https://via.placeholder.com/200'],
-                        ['name' => 'Cà Phê Đen', 'price' => '35,000đ', 'image' => 'https://via.placeholder.com/200'],
-                        ['name' => 'Sinh Tố Bơ', 'price' => '45,000đ', 'image' => 'https://via.placeholder.com/200'],
-                        ['name' => 'Nước Ép Cam', 'price' => '30,000đ', 'image' => 'https://via.placeholder.com/200'],
-                        ['name' => 'Trà Đào', 'price' => '40,000đ', 'image' => 'https://via.placeholder.com/200'],
-                        ['name' => 'Cà Phê Sữa', 'price' => '40,000đ', 'image' => 'https://via.placeholder.com/200'],
-                    ];
-                @endphp
-
                 @foreach ($products as $product)
                     <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <img src="{{ $product['image'] }}" class="card-img-top" alt="{{ $product['name'] }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $product['name'] }}</h5>
-                                <p class="card-text text-primary fw-bold">{{ $product['price'] }}</p>
-                                <a href="#" class="btn btn-outline-primary w-100">Xem Chi Tiết</a>
+                        <div class="card h-100 shadow-sm border-0 rounded-lg overflow-hidden">
+                            <div class="position-relative d-flex justify-content-center align-items-center" style="height: 250px;">
+                                <img src="{{ asset('img/product/' . $product->hinh_anh) }}" 
+                                    class="img-fluid p-3 rounded" 
+                                    alt="{{ $product->ten_san_pham }}" 
+                                    style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                            </div>
+                            <div class="card-body text-center">
+                                <h6 class="card-title font-weight-bold">{{ $product->ten_san_pham }}</h6>
+                                <p class="card-text text-danger fw-bold">{{ number_format($product->gia, 0, ',', '.') }} VND</p>
+                                <a href="#" class="btn btn-primary w-100 rounded-pill">Xem Chi Tiết</a>
                             </div>
                         </div>
                     </div>
                 @endforeach
+                @if ($products->isEmpty())
+                    <p class="text-center w-100">Không có sản phẩm nào.</p>
+                @endif
+            </div>
+            <!-- Thêm phân trang -->
+            <div class="d-flex justify-content-center mt-4">
+                {{ $products->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>
