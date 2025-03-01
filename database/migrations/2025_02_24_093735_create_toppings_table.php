@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('anh_dai_dien',255)->nullable();
             $table->integer('trang_thai')->default(1);
             $table->text('mo_ta')->nullable();
-            
             $table->timestamps();
         });
     }
