@@ -532,7 +532,6 @@
     transform: translateX(-50%); /* Căn giữa theo chiều ngang */
     width: 80%; /* Chiều rộng tối đa của menu */
     max-width: 1200px; /* Giới hạn max width để không quá dài */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     padding: 15px;
     z-index: 1000;
     transition: all 0.3s ease-in-out;
