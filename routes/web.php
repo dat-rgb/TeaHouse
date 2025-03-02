@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\GioHangController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SanPhamController;
@@ -16,3 +17,5 @@ Route::get('/san-pham/filter', [SanPhamController::class, 'filter'])->name('sanp
 
 
 Route::get('/san-pham/chi-tiet/1',[SanPhamController::class, 'productDetail'])->name('sanpham.detail');
+
+Route::get('/admin/home', [AdminHomeController::class,'index'])->name('admin.home.index');
