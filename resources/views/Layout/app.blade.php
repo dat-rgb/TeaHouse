@@ -71,7 +71,7 @@
                                 <a href="404.html" class="dropdown-item">404 Page</a>
                             </div>
                         </div>
-                        <a href="" class="nav-item nav-link">Liên hệ</a>
+                        <a href="{{ route('home.contact') }}" class="nav-item nav-link">Liên hệ</a>
                     </div>
                     <div class="border-start ps-4 d-none d-lg-flex align-items-center">
                         <!-- Nút tìm kiếm -->
