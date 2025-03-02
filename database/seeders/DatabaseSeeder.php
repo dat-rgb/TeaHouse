@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
             ToppingSeeder::class, 
             SizeSeeder::class,
             SanPhamSizeSeeder::class,
+            ChucVuSeeder::class,
+            TaiKhoanSeeder::class,
+            NhanVienSeeder::class,
+            KhachHangSeeder::class,
         ]);
     }
 }
