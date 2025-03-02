@@ -12,4 +12,8 @@ class HomeController extends Controller
         ];
         return view('Home.index');
     }
+
+    public function contact(){
+        return view('Home.lienHe');
+    }
 }

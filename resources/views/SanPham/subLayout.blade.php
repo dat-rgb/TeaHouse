@@ -1,10 +1,11 @@
 <div class="col-lg-3">
     <div class="position-sticky" style="top: 80px; border-right: 2px solid #ddd;"> <!-- Đường ngăn cách -->
-        <div class="fw-bold text-primary text-center mb-3"></div>
+        <div class="fw-bold text-primary text-center mb-3">Danh Mục</div>
         <ul class="list-group list-group-flush">
             @foreach($danhMucSanPhams as $danhMuc)
                 <li class="list-group-item border-0 category-item position-relative">
-                    <a href="#" class="text-decoration-none text-dark d-block d-flex justify-content-between align-items-center">
+                    <a href="#" class="text-decoration-none text-dark d-block d-flex justify-content-between align-items-center category-filter"
+                       data-id="{{ $danhMuc->ma_danh_muc }}">
                         {{ $danhMuc->ten_danh_muc }}
                         @if ($danhMuc->children->isNotEmpty())
                             <i class="fa fa-chevron-down text-secondary"></i> <!-- Icon dropdown -->
@@ -14,7 +15,8 @@
                         <ul class="list-unstyled sub-category">
                             @foreach($danhMuc->children as $subDanhMuc)
                                 <li class="list-group-item border-0">
-                                    <a href="#" class="text-decoration-none text-dark">{{ $subDanhMuc->ten_danh_muc }}</a>
+                                    <a href="#" class="text-decoration-none text-dark category-filter"
+                                       data-id="{{ $subDanhMuc->ma_danh_muc }}">{{ $subDanhMuc->ten_danh_muc }}</a>
                                 </li>
                             @endforeach
                         </ul>
@@ -24,6 +26,7 @@
         </ul>
     </div>
 </div>
+
 
 <style>
     /* Ẩn danh mục con mặc định */
