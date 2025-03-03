@@ -91,10 +91,18 @@
                                 <i class="fa fa-user fs-4"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end bg-light rounded-0 shadow border-0" aria-labelledby="loginDropdown">
-                                <li><a class="dropdown-item" href="#">Item 1</a></li>
-                                <li><a class="dropdown-item" href="#">Item 2</a></li>
-                                <li><a class="dropdown-item" href="#">Item 3</a></li>
-                                <li><a class="dropdown-item" href="#">Item 4</a></li>
+                                @auth
+                                    <li class="dropdown-item disabled">Xin chào, {{ Auth::user()->ten_tai_khoan }}</li>
+                                    <li><a class="dropdown-item" href="#">Tài khoản của tôi</a></li>
+                                    <li><a class="dropdown-item" href="#">Cài đặt</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a></li>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                @else
+                                    <li><a class="dropdown-item" href="{{ route('login') }}">Đăng nhập</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('register') }}">Đăng ký</a></li>
+                                @endauth
                             </ul>
                         </div>
                     </div>

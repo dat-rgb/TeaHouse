@@ -1,11 +1,23 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GioHangController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SanPhamController;
 use Illuminate\Support\Facades\Route;
 
+
+// Trang đăng nhập
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+
+// Trang đăng ký
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+
+// Đăng xuất
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/',[HomeController::class,'index'])->name('home.index');
 Route::get('/lien-he',[HomeController::class,'contact'])->name('home.contact');
@@ -18,4 +30,6 @@ Route::get('/san-pham/filter', [SanPhamController::class, 'filter'])->name('sanp
 
 Route::get('/san-pham/chi-tiet/1',[SanPhamController::class, 'productDetail'])->name('sanpham.detail');
 
-Route::get('/admin/home', [AdminHomeController::class,'index'])->name('admin.home.index');
+Route::get('/admin/home', [AdminHomeController::class, 'index'])
+    ->middleware('auth')
+    ->name('admin.home.index');
