@@ -25,7 +25,7 @@ class LoginController extends Controller
             $taiKhoan = TaiKhoan::where('email', $socialUser->getEmail())->first();
 
             if (!$taiKhoan) {
-                $taiKhoan = TaiKhoan::create([
+                $taiKhoan = TaiKhoan::firstOrCreate([
                     'email' => $socialUser->getEmail(),
                     'provider' => 'google',
                     'provider_id' => $socialUser->getId(),
@@ -45,8 +45,9 @@ class LoginController extends Controller
             Auth::login($taiKhoan);
             return redirect()->route('home.index')->with('success', 'Đăng nhập thành công!');
         } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->route('login')->with('error', 'Lỗi xác thực Google!');
-        }
+    DB::rollBack();
+    return redirect()->route('login')->with('error', 'Lỗi xác thực Google!');
+}
+
     }
 }

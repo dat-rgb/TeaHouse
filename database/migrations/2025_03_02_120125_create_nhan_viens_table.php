@@ -12,8 +12,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('ma_tai_khoan');
             $table->string('ho_ten_nhan_vien', 255);
             $table->date('ngay_sinh')->nullable();
-            $table->integer('gioi_tinh');
-            $table->char('so_dien_thoai', 10);
+            $table->integer('gioi_tinh')->nullable();
+            $table->char('so_dien_thoai', 10)->nullable();
             $table->string('email', 255)->nullable();
             $table->string('dia_chi', 255)->nullable();
             $table->string('ca_lam', 50)->nullable();
