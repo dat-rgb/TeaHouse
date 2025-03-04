@@ -18,3 +18,4 @@ class DanhMucComposer
         $view->with('danhMucSanPhams', $danhMucSanPhams);
     }
 }
+

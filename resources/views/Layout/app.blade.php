@@ -44,7 +44,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="{{ route('home.index') }}" class="nav-item nav-link active">Trang Chủ</a>
-                        <div class="nav-item dropdown">
+                        <div class="nav-item dropdown" style="background: white;">
                             <a href="{{ route('sanpham.index') }}" class="nav-link">Sản phẩm <i class="bi bi-chevron-down"></i></a>
                             <div class="mega-dropdown-menu d-flex">
                                 @foreach($danhMucSanPhams as $danhMuc)
