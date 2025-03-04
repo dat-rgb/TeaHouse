@@ -115,3 +115,7 @@ function closeSearch() {
 
 // Đóng khung tìm kiếm khi nhấn vào overlay
 document.getElementById("overlay").addEventListener("click", closeSearch);
+//modal đăng nhập
+function openLoginPopup() {
+    $('#loginPopup').modal('show');
+}

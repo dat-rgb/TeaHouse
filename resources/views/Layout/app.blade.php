@@ -19,11 +19,11 @@
     <!-- Libraries Stylesheet -->
     <link href="{{asset('lib/animate/animate.min.css')}}" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
-    
 </head>
 <body>
     <!-- Spinner Start -->
@@ -44,7 +44,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="{{ route('home.index') }}" class="nav-item nav-link active">Trang Chủ</a>
-                        <div class="nav-item dropdown">
+                        <div class="nav-item dropdown" style="background: white;">
                             <a href="{{ route('sanpham.index') }}" class="nav-link">Sản phẩm <i class="bi bi-chevron-down"></i></a>
                             <div class="mega-dropdown-menu d-flex">
                                 @foreach($danhMucSanPhams as $danhMuc)
@@ -100,7 +100,7 @@
                                         @csrf
                                     </form>
                                 @else
-                                    <li><a class="dropdown-item" href="{{ route('login') }}">Đăng nhập</a></li>
+                                    <li><a class="dropdown-item cursor-pointer" onclick="openLoginPopup()">Đăng nhập</a></li>
                                     <li><a class="dropdown-item" href="{{ route('register') }}">Đăng ký</a></li>
                                 @endauth
                             </ul>
@@ -108,7 +108,6 @@
                     </div>
                     <!-- Lớp phủ mờ nền khi tìm kiếm mở -->
                     <div id="overlay" class="position-fixed top-0 start-0 w-100 h-100 bg-dark d-none" style="z-index: 1049; opacity: 0.2;"></div>
-
                     <!-- Ô nhập tìm kiếm ở giữa phía trên -->
                     <div id="searchContainer" class="position-fixed top-0 start-50 translate-middle-x w-50 p-3 bg-white shadow-lg d-none" style="z-index: 1050; margin-top: 20px; border-radius: 10px;">
                         <div class="input-group">
@@ -122,6 +121,7 @@
             </nav>
         </div>
     </div>
+    <x-login-modal />
     <!-- Navbar End -->
     <!-- Content Start -->
     @yield('content')
