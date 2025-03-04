@@ -9,7 +9,7 @@ class SanPhamController extends Controller
 {
     public function index()
     {
-        $products = SanPham::where('trang_thai', 1)->paginate(6);
+        $products = SanPham::where('trang_thai', 1)->paginate(8);
         return view('SanPham.index', compact('products'));
     }
     public function productDetail(){

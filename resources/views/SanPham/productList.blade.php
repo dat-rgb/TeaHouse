@@ -44,7 +44,7 @@
 
 <div class="row">
     @foreach ($products as $product)
-        <div class="col-md-4 mb-4">
+        <div class="col-md-3 mb-3">
             <div class="card product-card shadow-sm border-0">
                 <div class="position-relative d-flex justify-content-center align-items-center" style="height: 250px;">
                     <img src="{{ asset('img/product/' . $product->hinh_anh) }}" 
@@ -55,7 +55,6 @@
                 <div class="card-body text-center">
                     <h6 class="product-title">{{ $product->ten_san_pham }}</h6>
                     <p class="product-price">{{ number_format($product->gia, 0, ',', '.') }} đ</p>
-                    <a href="{{ route('sanpham.detail') }}" class="btn btn-outline-primary w-100 product-btn">Xem Chi Tiết</a>
                 </div>
             </div>
         </div>
@@ -65,6 +64,6 @@
     @endif
 </div>
 <!-- Thêm phân trang -->
-<div class="d-flex justify-content-center mt-4">
+<div class="d-flex justify-content-center mt-3">
     {{ $products->links('pagination::bootstrap-4') }}
 </div>

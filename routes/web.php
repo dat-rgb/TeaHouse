@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GioHangController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KhachHangController;
 use App\Http\Controllers\SanPhamController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,10 @@ Route::get('/san-pham/chi-tiet/1',[SanPhamController::class, 'productDetail'])->
 Route::get('/admin/home', [AdminHomeController::class, 'index'])
     ->middleware('auth')
     ->name('admin.home.index');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/khachhang', [KhachHangController::class, 'index'])->name('khachhang.index');
+    Route::post('/khachhang/update', [KhachHangController::class, 'update'])->name('khachhang.update');
+});
+
+
