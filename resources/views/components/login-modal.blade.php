@@ -15,7 +15,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Mật khẩu</label>
-                        <input type="password" id="password" name="password" class="form-control">
+                        <input type="password" class="form-control" id="password" name="mat_khau" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
                 </form>

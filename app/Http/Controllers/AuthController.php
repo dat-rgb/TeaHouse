@@ -11,12 +11,10 @@ class AuthController extends Controller {
     public function showLoginForm() {
         return view('auth.login');
     }
-
     // Hiển thị form đăng ký
     public function showRegisterForm() {
         return view('auth.register');
     }
-
     // Xử lý đăng ký
     public function register(Request $request) {
         $request->validate([
@@ -36,12 +34,12 @@ class AuthController extends Controller {
     }
     public function login(Request $request) {
         $request->validate([
-            'so_dien_thoai' => 'required',
+            'email' => 'required|email',
             'mat_khau' => 'required',
         ]);
 
         $user = TaiKhoan::with(['nhanVien', 'khachHang'])
-            ->where('so_dien_thoai', $request->so_dien_thoai)
+            ->where('email', $request->email)
             ->first();
 
         if ($user && Hash::check($request->mat_khau, $user->mat_khau)) {
@@ -52,8 +50,9 @@ class AuthController extends Controller {
                 ->with('success', 'Đăng nhập thành công!');
         }
 
-        return back()->withErrors(['error' => 'Sai số điện thoại hoặc mật khẩu'])->withInput();
+        return back()->withErrors(['error' => 'Sai email hoặc mật khẩu'])->withInput();
     }
+
 
     // Xử lý đăng xuất
     public function logout() {
