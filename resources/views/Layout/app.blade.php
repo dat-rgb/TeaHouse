@@ -93,7 +93,7 @@
                             <ul class="dropdown-menu dropdown-menu-end bg-light rounded-0 shadow border-0" aria-labelledby="loginDropdown">
                                 @auth
                                     <li class="dropdown-item disabled">Xin chào, {{ Auth::user()->ten_tai_khoan }}</li>
-                                    <li><a class="dropdown-item" href="#">Tài khoản của tôi</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('khachhang.index') }}">Tài khoản của tôi</a></li>
                                     <li><a class="dropdown-item" href="#">Cài đặt</a></li>
                                     <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a></li>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
