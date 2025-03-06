@@ -13,14 +13,15 @@ class KhachHangController extends Controller
      */
     public function index()
     {
-        // Lấy thông tin khách hàng từ tài khoản đang đăng nhập
-        $khachHang = KhachHang::where('ma_tai_khoan', Auth::id())->first();
+        $khachHang = KhachHang::with('taiKhoan')->where('ma_tai_khoan', Auth::id())->first();
 
         if (!$khachHang) {
             return redirect()->route('home')->with('error', 'Không tìm thấy thông tin khách hàng.');
         }
+
         return view('khachhang.index', compact('khachHang'));
     }
+
     /**
      * Cập nhật thông tin khách hàng.
      */
@@ -37,8 +38,6 @@ class KhachHangController extends Controller
             'ho_ten_khach_hang' => $request->ho_ten_khach_hang,
             'ngay_sinh' => $request->ngay_sinh,
             'gioi_tinh' => $request->gioi_tinh,
-            'so_dien_thoai' => $request->so_dien_thoai,
-            'email' => $request->email,
             'dia_chi' => $request->dia_chi,
         ]);
         return redirect()->route('khachhang.index')->with([

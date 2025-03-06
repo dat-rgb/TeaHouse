@@ -36,7 +36,6 @@ class LoginController extends Controller
                 KhachHang::create([
                     'ma_tai_khoan' => $taiKhoan->ma_tai_khoan,
                     'ho_ten_khach_hang' => $socialUser->getName(),
-                    'email' => $socialUser->getEmail(),
                 ]);
             }
 
@@ -45,9 +44,8 @@ class LoginController extends Controller
             Auth::login($taiKhoan);
             return redirect()->route('home.index')->with('success', 'Đăng nhập thành công!');
         } catch (\Exception $e) {
-    DB::rollBack();
-    return redirect()->route('login')->with('error', 'Lỗi xác thực Google!');
-}
-
+            DB::rollBack();
+            return redirect()->route('login')->with('error', 'Lỗi xác thực Google!');
+        }
     }
 }
