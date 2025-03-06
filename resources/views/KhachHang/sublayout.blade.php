@@ -40,7 +40,7 @@
 <div class="card profile-card shadow-sm">
     <div class="card-body text-center">
         <h5 class="card-title fw-bold">{{ $khachHang->ho_ten_khach_hang }}</h5>
-        <p class="text-muted">{{ $khachHang->bean }} BEAN - <span class="badge bg-primary">{{ $khachHang->hangThanhVien }}</span></p>
+        <p class="text-muted">{{ $khachHang->diem_thanh_vien }} BEAN - <span class="badge bg-primary">{{ $khachHang->hang_thanh_vien }}</span></p>
         
         <div class="barcode">
             <img src="{{ asset('path_to_barcode_image') }}" alt="Barcode" class="img-fluid">

@@ -73,7 +73,8 @@
                         </div>
                         <a href="{{ route('home.contact') }}" class="nav-item nav-link">Liên hệ</a>
                     </div>
-                    <div class="border-start ps-4 d-none d-lg-flex align-items-center">
+                    <div class="border-start ps-4 d-flex align-items-center">
+
                         <!-- Nút tìm kiếm -->
                         <button type="button" class="btn btn-sm p-0" title="Tìm kiếm" onclick="toggleSearch()">
                             <i class="fa fa-search fs-4"></i>

@@ -27,8 +27,8 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="mb-3">
-                            <label for="so_dien_thoai" class="form-label">Số điện thoại</label>
-                            <input type="text" class="form-control" id="so_dien_thoai" name="so_dien_thoai" required>
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Mật khẩu</label>
