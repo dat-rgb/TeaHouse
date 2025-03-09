@@ -544,11 +544,13 @@
 /* Hiển thị menu khi hover */
 .nav-item:hover .mega-dropdown-menu,
 .nav-item .mega-dropdown-menu:hover {
+    width: 1000px;
+    height: auto;
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, 0);
+    background: white;
 }
-
 /* Cột danh mục cha */
 .mega-menu-column {
     flex: 1;
