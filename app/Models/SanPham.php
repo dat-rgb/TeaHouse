@@ -23,4 +23,8 @@ class SanPham extends Model
         'ma_danh_muc',
         'trang_thai'
     ];
+    public function sizes()
+    {
+        return $this->belongsToMany(Sizes::class, 'san_pham_sizes', 'ma_san_pham', 'ma_size');
+    }
 }
