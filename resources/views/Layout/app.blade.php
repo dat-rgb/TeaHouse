@@ -80,10 +80,10 @@
                             <i class="fa fa-search fs-4"></i>
                         </button>
                         <!-- Nút giỏ hàng -->
-                        <a href="{{ route('home.giohang') }}" class="btn btn-sm p-0 ms-3 position-relative" title="Giỏ hàng">
+                        <a href="{{ route('giohang.index') }}" class="btn btn-sm p-0 ms-3 position-relative" title="Giỏ hàng">
                             <i class="fa fa-shopping-cart fs-4"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                3 <!-- Số lượng sản phẩm gán cứng -->
+                                {{ $soLuongGioHang }}
                             </span>
                         </a>
                         <!-- Nút đăng nhập với dropdown -->

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\ViewComposers\DanhMucComposer;
+use App\Http\ViewComposers\GioHangComposer;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -22,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         view::composer(['Layout.app', 'sanpham.index', 'SanPham.subLayout'], DanhMucComposer::class);
+        View::composer(['Layout.app'], GioHangComposer::class);
     }
 }
