@@ -36,21 +36,27 @@
         color: #007bff;
     }
 </style>
-
 <div class="card profile-card shadow-sm">
     <div class="card-body text-center">
         <h5 class="card-title fw-bold">{{ $khachHang->ho_ten_khach_hang }}</h5>
-        <p class="text-muted">{{ $khachHang->diem_thanh_vien }} BEAN - <span class="badge bg-primary">{{ $khachHang->hang_thanh_vien }}</span></p>
-        
-        <div class="barcode">
-            <img src="{{ asset('path_to_barcode_image') }}" alt="Barcode" class="img-fluid">
-            <p class="fw-bold">{{ $khachHang->maThe }}</p>
-        </div>
-        
-        <p class="text-success fw-bold">Còn {{ $khachHang->beanConThieu }} BEAN nữa để thăng hạng.</p>
+        @php
+            $colors = [
+                'Đồng' => 'brown',
+                'Bạc' => 'silver',
+                'Vàng' => 'gold'
+            ];
+            $hangMau = $colors[$khachHang->hang_thanh_vien] ?? 'gray'; 
+        @endphp
+
+        <p class="text-muted">
+            {{ $khachHang->diem_thanh_vien }} BEAN - 
+            <span class="badge" style="background-color: {{ $hangMau }}; color: white;">
+                {{ $khachHang->hang_thanh_vien }}
+            </span>
+        </p>
+        <p class="fw-bold text-success">Còn {{ $khachHang->beanConThieu }} BEAN nữa để thăng hạng.</p>
     </div>
 </div>
-
 <ul class="list-group mt-3">
     <li class="list-group-item d-flex align-items-center">
         <i class="bi bi-person-circle"></i>
