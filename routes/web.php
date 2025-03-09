@@ -30,8 +30,7 @@ Route::get('/gio-hang',[GioHangController::class,'gioHang'])->name('home.giohang
 
 Route::get('/san-pham',[SanPhamController::class, 'index'])->name('sanpham.index');
 Route::get('/san-pham/filter', [SanPhamController::class, 'filter'])->name('sanpham.filter');
-
-Route::get('/san-pham/chi-tiet/1',[SanPhamController::class, 'productDetail'])->name('sanpham.detail');
+Route::get('/sanpham/{id}', [SanPhamController::class, 'show'])->name('sanpham.show');
 
 Route::get('/admin/home', [AdminHomeController::class, 'index'])
     ->middleware('auth')
