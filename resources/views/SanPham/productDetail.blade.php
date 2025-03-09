@@ -6,6 +6,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-light p-3 rounded">
             <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('sanpham.index') }}">Sản phẩm</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $sanPham->ten_san_pham }}</li>
         </ol>
     </nav>
@@ -119,7 +120,6 @@
         });
 
         updateSelected();
-        
     });
 </script>
 @endsection
