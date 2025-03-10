@@ -18,8 +18,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Libraries Stylesheet -->
     <link href="{{asset('lib/animate/animate.min.css')}}" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="{{ asset('owl-carousel/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('owl-carousel/owl.theme.default.min.css') }}">
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Template Stylesheet -->
@@ -123,6 +124,7 @@
         </div>
     </div>
     <x-login-modal />
+    @include('components.notification-modal')
     <!-- Navbar End -->
     <!-- Content Start -->
     @yield('content')
@@ -186,6 +188,9 @@
     <script src="{{asset('lib/easing/easing.min.js')}}"></script>
     <script src="{{asset('lib/waypoints/waypoints.min.js')}}"></script>
     <script src="{{asset('lib/owlcarousel/owl.carousel.min.js')}}"></script>
+    <!-- jQuery và Owl Carousel JS -->
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <!-- Template Javascript -->
     <script src="{{asset('js/main.js')}}"></script>
 </body>

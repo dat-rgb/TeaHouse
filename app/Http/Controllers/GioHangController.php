@@ -18,39 +18,51 @@ class GioHangController extends Controller
     //Thêm sản phẩm vào giỏ hàng
     public function addToCart(Request $request)
     {
-        // Lấy mã tài khoản từ session
-        $maTaiKhoan = Session::get('ma_tai_khoan', 1); // Nếu không có, gán mặc định là 1 = tài khoản Guest
-
+        $maTaiKhoan = Session::get('ma_tai_khoan', 1);
         $maSanPham = $request->input('ma_san_pham');
-        $soLuong = $request->input('so_luong', 1); // Mặc định là 1
+        $soLuong = $request->input('so_luong', 1);
+        $size = $request->input('size');
+        $toppings = $request->input('toppings', []);
 
-        // Lấy sản phẩm từ DB
-        $sanPham = SanPham::find($maSanPham);
-        if (!$sanPham) {
-            return response()->json(['message' => 'Sản phẩm không tồn tại'], 404);
+        if (!$size) {
+            return response()->json([
+                'message' => 'Vui lòng chọn size!',
+                'type' => 'error'
+            ]);
         }
 
-        // Lấy giỏ hàng hiện tại từ session
-        $gioHang = Session::get("cart_$maTaiKhoan", []);
+        $sanPham = SanPham::find($maSanPham);
+        if (!$sanPham) {
+            return response()->json([
+                'message' => 'Sản phẩm không tồn tại!',
+                'type' => 'error'
+            ]);
+        }
 
-        // Nếu sản phẩm đã có trong giỏ, tăng số lượng
+        $gioHang = Session::get("cart_$maTaiKhoan", []);
+        
         if (isset($gioHang[$maSanPham])) {
             $gioHang[$maSanPham]['so_luong'] += $soLuong;
         } else {
-            // Thêm sản phẩm mới vào giỏ
             $gioHang[$maSanPham] = [
                 'ten_san_pham' => $sanPham->ten_san_pham,
-                'gia' => $sanPham->gia,
+                'gia' => $sanPham->gia + $size,
+                'size' => $size,
+                'toppings' => $toppings,
                 'so_luong' => $soLuong,
                 'hinh_anh' => $sanPham->hinh_anh
             ];
         }
 
-        // Lưu lại giỏ hàng vào session
         Session::put("cart_$maTaiKhoan", $gioHang);
 
-        return response()->json(['message' => 'Đã thêm vào giỏ hàng', 'cart' => $gioHang], 200);
+        return response()->json([
+            'message' => 'Đã thêm vào giỏ hàng!',
+            'type' => 'success'
+        ]);
     }
+
+
     //Xóa sản phẩm khỏi giỏ hàng
     public function removeFromCart($maSanPham) {
         $maTaiKhoan = Session::get('ma_tai_khoan', 1);
