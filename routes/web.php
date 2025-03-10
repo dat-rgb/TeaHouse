@@ -43,3 +43,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
+
+
+// Route thực đơn
+Route::get('/thuc-don', [HomeController::class, 'thucDon'])->name('home.thucDon');

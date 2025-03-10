@@ -19,7 +19,7 @@
     <!-- Libraries Stylesheet -->
     <link href="{{asset('lib/animate/animate.min.css')}}" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    
+
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Template Stylesheet -->
@@ -27,14 +27,14 @@
 </head>
 <body>
     <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div id="spinner" class="bg-white show position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
     </div>
     <!-- Spinner End -->
     <!-- Navbar Start -->
-    <div class="container-fluid bg-white sticky-top">
+    <div class="bg-white container-fluid sticky-top">
         <div class="container">
-            <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
+            <nav class="py-2 bg-white navbar navbar-expand-lg navbar-light py-lg-0">
                 <a href="" class="navbar-brand">
                     <img class="img-fluid" src="{{asset('img/logo.png')}}" alt="Logo">
                 </a>
@@ -61,11 +61,11 @@
                                 @endforeach
                             </div>
                         </div>
-                        <a href="" class="nav-item nav-link">Thực đơn</a>
+                        <a href="{{ route('home.thucDon') }}" class="nav-item nav-link">Thực đơn</a>
                         <a href="" class="nav-item nav-link">Giới thiệu</a>
                         <div class="nav-item dropdown">
                             <a href="" class="nav-link">Chuyện nhà <i class="bi bi-chevron-down"></i></a>
-                            <div class="dropdown-menu bg-light rounded-0 m-0">
+                            <div class="m-0 dropdown-menu bg-light rounded-0">
                                 <a href="blog.html" class="dropdown-item">Trà trái cây</a>
                                 <a href="testimonial.html" class="dropdown-item">Nước ép</a>
                                 <a href="404.html" class="dropdown-item">404 Page</a>
@@ -75,22 +75,22 @@
                     </div>
                     <div class="border-start ps-4 d-none d-lg-flex align-items-center">
                         <!-- Nút tìm kiếm -->
-                        <button type="button" class="btn btn-sm p-0" title="Tìm kiếm" onclick="toggleSearch()">
+                        <button type="button" class="p-0 btn btn-sm" title="Tìm kiếm" onclick="toggleSearch()">
                             <i class="fa fa-search fs-4"></i>
                         </button>
                         <!-- Nút giỏ hàng -->
-                        <a href="{{ route('home.giohang') }}" class="btn btn-sm p-0 ms-3 position-relative" title="Giỏ hàng">
+                        <a href="{{ route('home.giohang') }}" class="p-0 btn btn-sm ms-3 position-relative" title="Giỏ hàng">
                             <i class="fa fa-shopping-cart fs-4"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <span class="top-0 position-absolute start-100 translate-middle badge rounded-pill bg-danger">
                                 3 <!-- Số lượng sản phẩm gán cứng -->
                             </span>
                         </a>
                         <!-- Nút đăng nhập với dropdown -->
                         <div class="dropdown d-inline-block ms-3">
-                            <button class="btn btn-sm p-0 position-relative" type="button" id="loginDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="p-0 btn btn-sm position-relative" type="button" id="loginDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-user fs-4"></i>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end bg-light rounded-0 shadow border-0" aria-labelledby="loginDropdown">
+                            <ul class="border-0 shadow dropdown-menu dropdown-menu-end bg-light rounded-0" aria-labelledby="loginDropdown">
                                 @auth
                                     <li class="dropdown-item disabled">Xin chào, {{ Auth::user()->ten_tai_khoan }}</li>
                                     <li><a class="dropdown-item" href="{{ route('khachhang.index') }}">Tài khoản của tôi</a></li>
@@ -100,16 +100,16 @@
                                         @csrf
                                     </form>
                                 @else
-                                    <li><a class="dropdown-item cursor-pointer" onclick="openLoginPopup()">Đăng nhập</a></li>
+                                    <li><a class="cursor-pointer dropdown-item" onclick="openLoginPopup()">Đăng nhập</a></li>
                                     <li><a class="dropdown-item" href="{{ route('register') }}">Đăng ký</a></li>
                                 @endauth
                             </ul>
                         </div>
                     </div>
                     <!-- Lớp phủ mờ nền khi tìm kiếm mở -->
-                    <div id="overlay" class="position-fixed top-0 start-0 w-100 h-100 bg-dark d-none" style="z-index: 1049; opacity: 0.2;"></div>
+                    <div id="overlay" class="top-0 position-fixed start-0 w-100 h-100 bg-dark d-none" style="z-index: 1049; opacity: 0.2;"></div>
                     <!-- Ô nhập tìm kiếm ở giữa phía trên -->
-                    <div id="searchContainer" class="position-fixed top-0 start-50 translate-middle-x w-50 p-3 bg-white shadow-lg d-none" style="z-index: 1050; margin-top: 20px; border-radius: 10px;">
+                    <div id="searchContainer" class="top-0 p-3 bg-white shadow-lg position-fixed start-50 translate-middle-x w-50 d-none" style="z-index: 1050; margin-top: 20px; border-radius: 10px;">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Nhập từ khóa tìm kiếm...">
                             <button class="btn btn-primary">
@@ -127,38 +127,38 @@
     @yield('content')
     <!-- Content End -->
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="py-5 mt-5 container-fluid bg-dark footer wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-primary mb-4">Địa chỉ</h4>
+                    <h4 class="mb-4 text-primary">Địa chỉ</h4>
                     <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>Quận 1, TP Hồ Chí Minh</p>
                     <p class="mb-2"><i class="fa fa-phone-alt text-primary me-3"></i>+84 090 1318 766</p>
                     <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>teahouse@gmail.com</p>
-                    <div class="d-flex pt-3">
+                    <div class="pt-3 d-flex">
                         <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
                         <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-primary mb-4">Giới thiệu</h4>
+                    <h4 class="mb-4 text-primary">Giới thiệu</h4>
                     <a class="btn btn-link" href="">Về chúng tôi</a>
                     <a class="btn btn-link" href="">Sản phẩm</a>
                     <a class="btn btn-link" href="">Điều khoản sử dụng</a>
                     <a class="btn btn-link" href="">Hổ trợ</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-primary mb-4">Giời hoạt động</h4>
+                    <h4 class="mb-4 text-primary">Giời hoạt động</h4>
                     <p class="mb-1">Thứ 2 - Chủ nhật</p>
                     <h6 class="text-light">07:00 am - 23:00 pm</h6>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-primary mb-4">Newsletter</h4>
+                    <h4 class="mb-4 text-primary">Newsletter</h4>
                     <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
                     <div class="position-relative w-100">
-                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                        <input class="py-3 bg-transparent form-control w-100 ps-4 pe-5" type="text" placeholder="Your email">
+                        <button type="button" class="top-0 py-2 mt-2 btn btn-primary position-absolute end-0 me-2">SignUp</button>
                     </div>
                 </div>
             </div>
@@ -166,10 +166,10 @@
     </div>
     <!-- Footer End -->
     <!-- Copyright Start -->
-    <div class="container-fluid copyright py-4">
+    <div class="py-4 container-fluid copyright">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                <div class="mb-3 text-center col-md-6 text-md-start mb-md-0">
                     &copy; <a class="fw-medium" href="#">Tea House</a>, All Right Reserved.
                 </div>
             </div>
