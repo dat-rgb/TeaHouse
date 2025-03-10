@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             CuaHangSeeder::class,
             CuaHangNguyenLieuSeeder::class,
             NhanVienSeeder::class,
+            ThanhPhanSanPhamSeeder::class,
         ]);
     }
 }

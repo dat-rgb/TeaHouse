@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id('ma_nguyen_lieu');
             $table->string('ten_nguyen_lieu', 255);
             $table->unsignedBigInteger('ma_nha_cung_cap');
+            $table->float('dinh_luong');
+            $table->float('gia');
             $table->integer('loai_nguyen_lieu')->default(0); // 0: chế biến, 1: tiêu dùng
-            $table->string('don_vi', 10);
+            $table->string('don_vi', 50);
             $table->boolean('trang_thai')->default(1);
             $table->timestamps();
 

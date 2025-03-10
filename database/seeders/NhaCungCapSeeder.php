@@ -10,11 +10,36 @@ class NhaCungCapSeeder extends Seeder
     public function run()
     {
         $nhaCungCaps = [
-            ['ten_nha_cung_cap' => 'Công ty A', 'dia_chi' => 'Hà Nội', 'so_dien_thoai' => '0123456789', 'email' => 'a@example.com', 'trang_thai' => 1],
-            ['ten_nha_cung_cap' => 'Công ty B', 'dia_chi' => 'TP HCM', 'so_dien_thoai' => '0987654321', 'email' => 'b@example.com', 'trang_thai' => 1],
-            ['ten_nha_cung_cap' => 'Công ty C', 'dia_chi' => 'Đà Nẵng', 'so_dien_thoai' => '0345678901', 'email' => 'c@example.com', 'trang_thai' => 1],
-            ['ten_nha_cung_cap' => 'Công ty D', 'dia_chi' => 'Cần Thơ', 'so_dien_thoai' => '0765432109', 'email' => 'd@example.com', 'trang_thai' => 1],
-            ['ten_nha_cung_cap' => 'Công ty E', 'dia_chi' => 'Hải Phòng', 'so_dien_thoai' => '0456789012', 'email' => 'e@example.com', 'trang_thai' => 1],
+            //1
+            [
+                'ten_nha_cung_cap' => 'CTY TNHH COFFEE CONCEPT',
+                'dia_chi' => 'Số 5 Đường 7C, KP5, P. An Phú, TP. Thủ Đức, TP. HCM.', 
+                'so_dien_thoai' => '0965867586',
+                'email' => 'hello@coffeeconcept.vn', 
+                'trang_thai' => 1
+            ],
+            //2
+            [
+                'ten_nha_cung_cap' => 'CÔNG TY CỐ PHẦN SỮA VIỆT NAM',
+                'dia_chi' => '10, Tân Trào, Phường Tân Phú, Quận 7, Thành phố Hồ Chí Minh, Việt Nam', 
+                'so_dien_thoai' => '0254155555',
+                'email' => 'vinamilk@vinamilk.com.vn', 
+                'trang_thai' => 1
+            ],
+            //3
+            [
+                'ten_nha_cung_cap' => 'CÔNG TY CỐ PHẦN VINBAR',
+                'dia_chi' => '', 
+                'so_dien_thoai' => '',
+                'email' => 'hotro@vinbar.vn', 
+                'trang_thai' => 1
+            ],
+            //4
+            //5
+            //6
+            //7
+            //8
+            //9
         ];
 
         DB::table('nha_cung_caps')->insert($nhaCungCaps);
