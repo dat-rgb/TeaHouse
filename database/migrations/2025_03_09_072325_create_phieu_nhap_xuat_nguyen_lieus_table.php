@@ -17,11 +17,16 @@ return new class extends Migration
             $table->unsignedBigInteger('ma_nguyen_lieu');
             $table->unsignedBigInteger('ma_nhan_vien'); // Nhân viên thực hiện nhập/xuất
             $table->integer('loai_phieu');  // 0: Phiếu nhập, 1: phiếu xuất
+            $table->string('so_lo')->nullable(); // Số lô nhập kho (nếu có)
+            $table->date('ngay_san_xuat')->nullable(); // Ngày sản xuất của nguyên liệu
+            $table->date('han_su_dung')->nullable(); // Ngày hết hạn
+            $table->float('dinh_luong'); //định lượng nhập hoặc xuất (g/ml)
             $table->float('so_luong'); // Số lượng nhập hoặc xuất
-            $table->string('don_vi', 10);
+            $table->string('don_vi', 50);
             $table->float('gia_tien')->default(0)->nullable(); // Giá nhập hoặc xuất trên mỗi đơn vị
             $table->float('tong_tien')->default(0)->nullable(); // Tổng tiền (gia_tien * so_luong)
             $table->timestamp('ngay_giao_dich')->default(DB::raw('CURRENT_TIMESTAMP')); // Ngày nhập/xuất
+
             $table->text('ghi_chu')->nullable(); // Ghi chú nếu có
             $table->timestamps();
 
