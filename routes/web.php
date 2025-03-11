@@ -40,7 +40,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/khachhang', [KhachHangController::class, 'index'])->name('khachhang.index');
     Route::post('/khachhang/update', [KhachHangController::class, 'update'])->name('khachhang.update');
 });
-C005=======
 Route::prefix('gio-hang')->group(function () {
     Route::get('/', [GioHangController::class, 'gioHang'])->name('giohang.index');
     Route::post('/them', [GioHangController::class, 'addToCart'])->name('giohang.add');
