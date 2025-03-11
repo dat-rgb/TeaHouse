@@ -124,12 +124,9 @@
 
     .hidden { display: none; }
 </style>
-
-
-<div class="container">
+<div class="container" style="padding: 70px;">
     <h1 class="text-center">{{ $viewData['title'] }}</h1>
     <h2 class="header-logo">Tea House</h2>
-
     @php
         $categories = [
             'tra' => $tra,
@@ -146,12 +143,8 @@
             'nuocEp' => 'Nước Ép'
         ];
     @endphp
-
-
-
     @foreach ($categories as $key => $items)
     <h2>{{ $categoryNames[$key] ?? ucfirst($key) }}</h2>
-
         <div class="slider-container">
             <button class="hidden slider-btn left" id="prev-{{ $key }}">&#10094;</button>
             <div class="slider-wrapper" id="slider-{{ $key }}">
@@ -159,8 +152,10 @@
                     <div class="product-card">
                         <div class="border-0 shadow-sm card">
                             <div class="position-relative d-flex justify-content-center align-items-center" style="height: 250px;">
-                                <img src="{{ asset('img/product/' . $item->hinh_anh) }}" class="p-3 img-fluid product-image"
-                                     alt="{{ $item->ten_san_pham }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                                <a href="{{ route('sanpham.show',$item->ma_san_pham) }}">
+                                    <img src="{{ asset('img/product/' . $item->hinh_anh) }}" class="p-3 img-fluid product-image"
+                                    alt="{{ $item->ten_san_pham }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                                </a>
                             </div>
                             <div class="text-center card-body">
                                 <h6 class="product-title">{{ $item->ten_san_pham }}</h6>
