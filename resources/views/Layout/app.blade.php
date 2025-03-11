@@ -18,8 +18,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Libraries Stylesheet -->
     <link href="{{asset('lib/animate/animate.min.css')}}" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="{{ asset('owl-carousel/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('owl-carousel/owl.theme.default.min.css') }}">
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Template Stylesheet -->
@@ -73,17 +74,17 @@
                         </div>
                         <a href="{{ route('home.contact') }}" class="nav-item nav-link">Liên hệ</a>
                     </div>
-                    <div class="border-start ps-4 d-none d-lg-flex align-items-center">
+                    <div class="border-start ps-4 d-flex align-items-center">
+
                         <!-- Nút tìm kiếm -->
                         <button type="button" class="p-0 btn btn-sm" title="Tìm kiếm" onclick="toggleSearch()">
                             <i class="fa fa-search fs-4"></i>
                         </button>
                         <!-- Nút giỏ hàng -->
-                        <a href="{{ route('home.giohang') }}" class="p-0 btn btn-sm ms-3 position-relative" title="Giỏ hàng">
+                        <a href="{{ route('giohang.index') }}" class="btn btn-sm p-0 ms-3 position-relative" title="Giỏ hàng">
                             <i class="fa fa-shopping-cart fs-4"></i>
-                            <span class="top-0 position-absolute start-100 translate-middle badge rounded-pill bg-danger">
-                                3 <!-- Số lượng sản phẩm gán cứng -->
-                            </span>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ $soLuongGioHang }}
                         </a>
                         <!-- Nút đăng nhập với dropdown -->
                         <div class="dropdown d-inline-block ms-3">
@@ -122,6 +123,7 @@
         </div>
     </div>
     <x-login-modal />
+    @include('components.notification-modal')
     <!-- Navbar End -->
     <!-- Content Start -->
     @yield('content')
@@ -185,6 +187,9 @@
     <script src="{{asset('lib/easing/easing.min.js')}}"></script>
     <script src="{{asset('lib/waypoints/waypoints.min.js')}}"></script>
     <script src="{{asset('lib/owlcarousel/owl.carousel.min.js')}}"></script>
+    <!-- jQuery và Owl Carousel JS -->
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <!-- Template Javascript -->
     <script src="{{asset('js/main.js')}}"></script>
 </body>

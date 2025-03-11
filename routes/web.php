@@ -30,8 +30,7 @@ Route::get('/gio-hang',[GioHangController::class,'gioHang'])->name('home.giohang
 
 Route::get('/san-pham',[SanPhamController::class, 'index'])->name('sanpham.index');
 Route::get('/san-pham/filter', [SanPhamController::class, 'filter'])->name('sanpham.filter');
-
-Route::get('/san-pham/chi-tiet/1',[SanPhamController::class, 'productDetail'])->name('sanpham.detail');
+Route::get('/sanpham/{id}', [SanPhamController::class, 'show'])->name('sanpham.show');
 
 Route::get('/admin/home', [AdminHomeController::class, 'index'])
     ->middleware('auth')
@@ -41,9 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/khachhang', [KhachHangController::class, 'index'])->name('khachhang.index');
     Route::post('/khachhang/update', [KhachHangController::class, 'update'])->name('khachhang.update');
 });
-
-
-
-
-// Route thực đơn
-Route::get('/thuc-don', [HomeController::class, 'thucDon'])->name('home.thucDon');
+C005=======
+Route::prefix('gio-hang')->group(function () {
+    Route::get('/', [GioHangController::class, 'gioHang'])->name('giohang.index');
+    Route::post('/them', [GioHangController::class, 'addToCart'])->name('giohang.add');
+    Route::delete('/gio-hang/xoa/{maSanPham}', [GioHangController::class, 'removeFromCart'])->name('giohang.remove');
+    Route::post('/xoa-tat-ca', [GioHangController::class, 'clearCart'])->name('giohang.clear');
+});aster

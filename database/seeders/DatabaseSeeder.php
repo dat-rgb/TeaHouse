@@ -21,8 +21,14 @@ class DatabaseSeeder extends Seeder
             SanPhamSizeSeeder::class,
             ChucVuSeeder::class,
             TaiKhoanSeeder::class,
-            NhanVienSeeder::class,
+            //NhanVienSeeder::class,
             KhachHangSeeder::class,
+            NhaCungCapSeeder::class,
+            NguyenLieuSeeder::class,
+            CuaHangSeeder::class,
+            CuaHangNguyenLieuSeeder::class,
+            NhanVienSeeder::class,
+            ThanhPhanSanPhamSeeder::class,
         ]);
     }
 }

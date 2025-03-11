@@ -10,6 +10,7 @@ class ChucVuSeeder extends Seeder
     public function run()
     {
         DB::table('chuc_vu')->insert([
+            ['ten_chuc_vu' => 'Quản lý cửa hàng', 'luong_co_ban' => 7000000],
             ['ten_chuc_vu' => 'Nhân viên phục vụ', 'luong_co_ban' => 5000000],
             ['ten_chuc_vu' => 'Nhân viên bán hàng', 'luong_co_ban' => 6000000],
             ['ten_chuc_vu' => 'Nhân viên kho', 'luong_co_ban' => 5500000],
