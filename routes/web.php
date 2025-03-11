@@ -21,12 +21,11 @@ Route::post('/register', [AuthController::class, 'register']);
 // Đăng xuất
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Home
-Route::prefix('home')->group(function () {
-    Route::get('/',[HomeController::class,'index'])->name('home.index');
-    Route::get('/lien-he',[HomeController::class,'contact'])->name('home.contact');
-    Route::get('/thuc-don',[HomeController::class,'thucDon'])->name('home.thucdon');
-    Route::get('/gio-hang',[GioHangController::class,'gioHang'])->name('home.giohang');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/lien-he', [HomeController::class, 'contact'])->name('home.contact');
+Route::get('/thuc-don', [HomeController::class, 'thucDon'])->name('home.thucdon');
+Route::get('/gio-hang', [GioHangController::class, 'gioHang'])->name('home.giohang');
+
 //SamPham
 Route::prefix('san-pham')->group(function () {
     Route::get('/',[SanPhamController::class, 'index'])->name('sanpham.index');
