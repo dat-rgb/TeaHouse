@@ -19,15 +19,15 @@ Route::get('auth/google/callback',[LoginController::class, 'handleGoogleCallback
 // Trang đăng ký
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
-
 // Đăng xuất
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-Route::get('/',[HomeController::class,'index'])->name('home.index');
-Route::get('/lien-he',[HomeController::class,'contact'])->name('home.contact');
-
-Route::get('/gio-hang',[GioHangController::class,'gioHang'])->name('home.giohang');
-
+// Home
+Route::prefix('gio-hang')->group(function () {
+    Route::get('/',[HomeController::class,'index'])->name('home.index');
+    Route::get('/lien-he',[HomeController::class,'contact'])->name('home.contact');
+    Route::get('/thuc-don',[HomeController::class,'thucDon'])->name('home.thucdon');
+    Route::get('/gio-hang',[GioHangController::class,'gioHang'])->name('home.giohang');
+});
 Route::get('/san-pham',[SanPhamController::class, 'index'])->name('sanpham.index');
 Route::get('/san-pham/filter', [SanPhamController::class, 'filter'])->name('sanpham.filter');
 Route::get('/sanpham/{id}', [SanPhamController::class, 'show'])->name('sanpham.show');
@@ -45,4 +45,5 @@ Route::prefix('gio-hang')->group(function () {
     Route::post('/them', [GioHangController::class, 'addToCart'])->name('giohang.add');
     Route::delete('/gio-hang/xoa/{maSanPham}', [GioHangController::class, 'removeFromCart'])->name('giohang.remove');
     Route::post('/xoa-tat-ca', [GioHangController::class, 'clearCart'])->name('giohang.clear');
-});aster
+});
+
