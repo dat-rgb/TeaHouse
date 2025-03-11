@@ -7,7 +7,6 @@
         <h2 class="display-2 text-dark mb-4 animated slideInDown">Giỏ hàng</h2>
     </div>
 </div>
-
 <div class="container my-5">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-light p-3 rounded">
@@ -15,16 +14,14 @@
             <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
         </ol>
     </nav>
-
     @php
         $maTaiKhoan = session('ma_tai_khoan', 1);
         $gioHang = session("cart_$maTaiKhoan", []);
         $tongTien = 0;
     @endphp
-
     @if (empty($gioHang))
         <div class="alert alert-warning text-center">
-            Giỏ hàng của bạn đang trống. <a href="{{ route('home.index') }}" class="text-primary">Tiếp tục mua sắm</a>
+            Giỏ hàng của bạn đang trống. <a href="{{ route('sanpham.index') }}" class="text-primary">Tiếp tục mua sắm</a>
         </div>
     @else
         <div class="row">
