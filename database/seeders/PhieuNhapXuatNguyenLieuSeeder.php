@@ -259,6 +259,101 @@ class PhieuNhapXuatNguyenLieuSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            //14 LY NHỰA PET NẮP CẦU 350ML/ THÙNG (1000 LY)	1.020.000 ₫	Thùng 1000ly
+            [
+                'ma_cua_hang' => 1, //Cửa hàng 1
+                'ma_nguyen_lieu' => 14,
+                'ma_nhan_vien' => 1, // mã nhân viên nhập
+                'so_lo' => 'LO-001',
+                'ngay_san_xuat' => '2025-01-10',
+                'han_su_dung' => '2027-06-10',
+                'loai_phieu' => 0, // Nhập
+                'dinh_luong' => 5000, // định lượng (g/ml/Cái/Ly)
+                'so_luong' => 5, // số lượng
+                'don_vi' => 'Thùng 1000ly', // đơn vị
+                'gia_tien' => 1020000, //giá tiền
+                'tong_tien' => 5100000, //tổng tiền
+                'ngay_giao_dich' => now(), //ngày nhập
+                'ghi_chu' => 'Nhập LY NHỰA PET NẮP CẦU 350ML/ THÙNG (1000 LY) số lượng 5 (5000 ly/cái)', // ghi chú (nếu có)
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            //15 LY NHỰA PET NẮP CẦU 500ML/ THÙNG (1000 LY)	1.070.000 ₫	Thùng 1000ly
+            [
+                'ma_cua_hang' => 1, //Cửa hàng 1
+                'ma_nguyen_lieu' => 15,
+                'ma_nhan_vien' => 1, // mã nhân viên nhập
+                'so_lo' => 'LO-001',
+                'ngay_san_xuat' => '2025-01-10',
+                'han_su_dung' => '2027-06-10',
+                'loai_phieu' => 0, // Nhập
+                'dinh_luong' => 5000, // định lượng (g/ml/Cái/Ly)
+                'so_luong' => 5, // số lượng
+                'don_vi' => 'Thùng 1000ly', // đơn vị
+                'gia_tien' => 1070000, //giá tiền
+                'tong_tien' => 5350000, //tổng tiền
+                'ngay_giao_dich' => now(), //ngày nhập
+                'ghi_chu' => 'Nhập LY NHỰA PET NẮP CẦU 500ML/ THÙNG (1000 LY) số lượng 5 (5000 ly/cái)', // ghi chú (nếu có)
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            //16 LY NHỰA PET NẮP CẦU 700ML/ THÙNG (1000 LY)	1.400.000 ₫	Thùng 1000ly
+            [
+                'ma_cua_hang' => 1, //Cửa hàng 1
+                'ma_nguyen_lieu' => 16,
+                'ma_nhan_vien' => 1, // mã nhân viên nhập
+                'so_lo' => 'LO-001',
+                'ngay_san_xuat' => '2025-01-10',
+                'han_su_dung' => '2027-06-10',
+                'loai_phieu' => 0, // Nhập
+                'dinh_luong' => 5000, // định lượng (g/ml/Cái/Ly)
+                'so_luong' => 5, // số lượng
+                'don_vi' => 'Thùng 1000ly', // đơn vị
+                'gia_tien' => 1400000, //giá tiền
+                'tong_tien' => 7000000, //tổng tiền
+                'ngay_giao_dich' => now(), //ngày nhập
+                'ghi_chu' => 'Nhập LY NHỰA PET NẮP CẦU 700ML/ THÙNG (1000 LY) số lượng 5 (5000 ly/cái)', // ghi chú (nếu có)
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            //17 Ly giấy 12oz - 360ml	753.000 ₫	Thùng 1000ly
+            [
+                'ma_cua_hang' => 1, //Cửa hàng 1
+                'ma_nguyen_lieu' => 17,
+                'ma_nhan_vien' => 1, // mã nhân viên nhập
+                'so_lo' => 'LO-001',
+                'ngay_san_xuat' => '2025-01-10',
+                'han_su_dung' => '2027-06-10',
+                'loai_phieu' => 0, // Nhập
+                'dinh_luong' => 5000, // định lượng (g/ml/Cái/Ly)
+                'so_luong' => 5, // số lượng
+                'don_vi' => 'Thùng 1000ly', // đơn vị
+                'gia_tien' => 753000, //giá tiền
+                'tong_tien' => 3675000, //tổng tiền
+                'ngay_giao_dich' => now(), //ngày nhập
+                'ghi_chu' => 'Nhập Ly giấy 12oz - 360ml số lượng 5 (5000 ly/cái)', // ghi chú (nếu có)
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            //18 Nắp nóng đen	529.000 ₫	Thùng 1000 Cái
+            [
+                'ma_cua_hang' => 1, //Cửa hàng 1
+                'ma_nguyen_lieu' => 18,
+                'ma_nhan_vien' => 1, // mã nhân viên nhập
+                'so_lo' => 'LO-001',
+                'ngay_san_xuat' => '2025-01-10',
+                'han_su_dung' => '2027-06-10',
+                'loai_phieu' => 0, // Nhập
+                'dinh_luong' => 5000, // định lượng (g/ml/Cái/Ly)
+                'so_luong' => 5, // số lượng
+                'don_vi' => 'Thùng 1000ly', // đơn vị
+                'gia_tien' => 529000, //giá tiền
+                'tong_tien' => 2645000, //tổng tiền
+                'ngay_giao_dich' => now(), //ngày nhập
+                'ghi_chu' => 'Nhập Ly giấy 12oz - 360ml số lượng 5 (5000 ly/cái)', // ghi chú (nếu có)
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

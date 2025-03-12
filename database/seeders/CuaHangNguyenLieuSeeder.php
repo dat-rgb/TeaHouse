@@ -170,6 +170,67 @@ class CuaHangNguyenLieuSeeder extends Seeder
                 'so_luong_ton_max' => 0,
                 'don_vi' => 'Chai 1,3kg', 
             ],
+            //14 LY NHỰA PET NẮP CẦU 350ML/ THÙNG (1000 LY)	1.020.000 ₫	Thùng 1000ly
+            [
+                'ma_cua_hang' => 1, 
+                'ma_nguyen_lieu' => 14, // Tên nguyên liệu ứng với mã
+                'dinh_luong_ton'=> 5000, // định lượng tồn (cộng dồn định lượng hoặc trừ từ phiếu nhập/xuất)
+                'so_luong_ton' => 5, 
+                'dinh_luong_ton_min' => 0,
+                'dinh_luong_ton_max' => 0,
+                'so_luong_ton_min' => 0,
+                'so_luong_ton_max' => 0,
+                'don_vi' => 'Thùng 1000ly/cái', 
+            ],
+            //15 LY NHỰA PET NẮP CẦU 500ML/ THÙNG (1000 LY)	1.070.000 ₫	Thùng 1000ly
+            [
+                'ma_cua_hang' => 1, 
+                'ma_nguyen_lieu' => 15, // Tên nguyên liệu ứng với mã
+                'dinh_luong_ton'=> 5000, // định lượng tồn (cộng dồn định lượng hoặc trừ từ phiếu nhập/xuất)
+                'so_luong_ton' => 5, 
+                'dinh_luong_ton_min' => 0,
+                'dinh_luong_ton_max' => 0,
+                'so_luong_ton_min' => 0,
+                'so_luong_ton_max' => 0,
+                'don_vi' => 'Thùng 1000ly/cái', 
+            ],
+            //16 LY NHỰA PET NẮP CẦU 700ML/ THÙNG (1000 LY)	1.400.000 ₫	Thùng 1000ly
+            [
+                'ma_cua_hang' => 1, 
+                'ma_nguyen_lieu' => 16, // Tên nguyên liệu ứng với mã
+                'dinh_luong_ton'=> 5000, // định lượng tồn (cộng dồn định lượng hoặc trừ từ phiếu nhập/xuất)
+                'so_luong_ton' => 5, 
+                'dinh_luong_ton_min' => 0,
+                'dinh_luong_ton_max' => 0,
+                'so_luong_ton_min' => 0,
+                'so_luong_ton_max' => 0,
+                'don_vi' => 'Thùng 1000ly/cái', 
+            ],
+            //17 Ly giấy 12oz - 360ml	753.000 ₫	Thùng 1000ly
+            [
+                'ma_cua_hang' => 1, 
+                'ma_nguyen_lieu' => 17, // Tên nguyên liệu ứng với mã
+                'dinh_luong_ton'=> 5000, // định lượng tồn (cộng dồn định lượng hoặc trừ từ phiếu nhập/xuất)
+                'so_luong_ton' => 5, 
+                'dinh_luong_ton_min' => 0,
+                'dinh_luong_ton_max' => 0,
+                'so_luong_ton_min' => 0,
+                'so_luong_ton_max' => 0,
+                'don_vi' => 'Thùng 1000ly/cái', 
+            ],
+            //18 Nắp nóng đen	529.000 ₫	Thùng 1000 Cái
+            [
+                'ma_cua_hang' => 1, 
+                'ma_nguyen_lieu' => 18, // Tên nguyên liệu ứng với mã
+                'dinh_luong_ton'=> 5000, // định lượng tồn (cộng dồn định lượng hoặc trừ từ phiếu nhập/xuất)
+                'so_luong_ton' => 5, 
+                'dinh_luong_ton_min' => 0,
+                'dinh_luong_ton_max' => 0,
+                'so_luong_ton_min' => 0,
+                'so_luong_ton_max' => 0,
+                'don_vi' => 'Thùng 1000ly/cái', 
+            ],
+            /////
         ];
 
         DB::table('cua_hang_nguyen_lieus')->insert($cua_hang_nguyen_lieus);
