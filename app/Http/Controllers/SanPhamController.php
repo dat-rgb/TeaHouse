@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class SanPhamController extends Controller
 {
+    //Trang product list
     public function index()
     {
         $products = SanPham::where('trang_thai', 1)->paginate(8);
         return view('SanPham.index', compact('products'));
     }
+    //Product Detail
     public function show($id)
     {
         // Lấy thông tin sản phẩm
@@ -23,13 +25,13 @@ class SanPhamController extends Controller
         $sizes = DB::table('thanh_phan_san_phams')
             ->join('sizes', 'thanh_phan_san_phams.ma_size', '=', 'sizes.ma_size')
             ->where('thanh_phan_san_phams.ma_san_pham', $id)
-            ->select('sizes.ten_size', 'thanh_phan_san_phams.ma_size', 'sizes.gia_size') 
-            ->distinct() // Loại bỏ trùng lặp nếu có
+            ->select('sizes.ma_size','sizes.ten_size', 'thanh_phan_san_phams.ma_size', 'sizes.gia_size') 
+            ->distinct() 
             ->get();
         // Lấy danh sách topping
         $toppings = DB::table('toppings')
             ->where('trang_thai', 1)
-            ->select('ten_topping', 'gia_topping')
+            ->select('ma_topping','ten_topping', 'gia_topping')
             ->get();
         return view('SanPham.productDetail', compact('sanPham', 'sizes', 'toppings'));
     }
