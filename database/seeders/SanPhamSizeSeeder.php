@@ -24,12 +24,8 @@ class SanPhamSizeSeeder extends Seeder
             ['ma_san_pham' => 3, 'ma_size' => 3],
             // sp 4
             ['ma_san_pham' => 4, 'ma_size' => 1],
-            ['ma_san_pham' => 4, 'ma_size' => 2],
-           
             // sp 5
             ['ma_san_pham' => 5, 'ma_size' => 1],
-            ['ma_san_pham' => 5, 'ma_size' => 2],
-          
             // sp 6
             ['ma_san_pham' => 6, 'ma_size' => 1],
             ['ma_san_pham' => 6, 'ma_size' => 2],
@@ -44,12 +40,8 @@ class SanPhamSizeSeeder extends Seeder
             ['ma_san_pham' => 8, 'ma_size' => 3],
             // sp 9
             ['ma_san_pham' => 9, 'ma_size' => 1],
-            ['ma_san_pham' => 9, 'ma_size' => 2],
-           
             // sp 10
             ['ma_san_pham' => 10, 'ma_size' => 1],
-            ['ma_san_pham' => 10, 'ma_size' => 2],
-            ['ma_san_pham' => 10, 'ma_size' => 3],
             // sp 11
             ['ma_san_pham' => 11, 'ma_size' => 1],
             ['ma_san_pham' => 11, 'ma_size' => 2],

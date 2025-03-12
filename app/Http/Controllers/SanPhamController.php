@@ -19,19 +19,18 @@ class SanPhamController extends Controller
         // Lấy thông tin sản phẩm
         $sanPham = DB::table('san_phams')->where('ma_san_pham', $id)->first();
 
-        // Lấy danh sách size của sản phẩm
-        $sizes = DB::table('san_pham_sizes')
-            ->join('sizes', 'san_pham_sizes.ma_size', '=', 'sizes.ma_size')
-            ->where('san_pham_sizes.ma_san_pham', $id)
-            ->select('sizes.ten_size', 'san_pham_sizes.ma_size', 'sizes.gia_size') // Đảm bảo 'gia_them' có trong select
+        // Lấy danh sách size của sản phẩm từ thanh_phan_san_phams
+        $sizes = DB::table('thanh_phan_san_phams')
+            ->join('sizes', 'thanh_phan_san_phams.ma_size', '=', 'sizes.ma_size')
+            ->where('thanh_phan_san_phams.ma_san_pham', $id)
+            ->select('sizes.ten_size', 'thanh_phan_san_phams.ma_size', 'sizes.gia_size') 
+            ->distinct() // Loại bỏ trùng lặp nếu có
             ->get();
-
         // Lấy danh sách topping
         $toppings = DB::table('toppings')
             ->where('trang_thai', 1)
             ->select('ten_topping', 'gia_topping')
             ->get();
-
         return view('SanPham.productDetail', compact('sanPham', 'sizes', 'toppings'));
     }
     public function filter(Request $request)
