@@ -29,20 +29,23 @@
                 <div class="d-flex gap-2">
                     @foreach ($sizes as $size)
                         <label class="btn btn-outline-secondary btn-sm size-label">
-                            <input type="radio" name="size" value="{{ $size->gia_size }}" class="size-option d-none"> 
+                            <input type="radio" name="size" value="{{ $size->ma_size }}" data-gia="{{ $size->gia_size }}" class="size-option d-none"> 
                             {{ $size->ten_size }} + {{ number_format($size->gia_size, 0, ',', '.') }} đ
                         </label>
                     @endforeach
                 </div>
             </div>
-
+            <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Số lượng</h6>
+                <input type="number" id="so-luong" class="form-control w-25" value="1" min="1">
+            </div>
             <div class="mb-3">
                 <h6 class="fw-semibold mb-2">Topping</h6>
                 <div class="row g-2">
                     @foreach ($toppings as $topping)
                         <div class="col-6 col-sm-4">
                             <label class="btn btn-outline-secondary btn-sm w-100 topping-label">
-                                <input type="checkbox" class="topping-option d-none" value="{{ $topping->gia_topping }}"> 
+                                <input type="checkbox" class="topping-option d-none" value="{{ $topping->ma_topping }}" data-gia="{{ $topping->gia_topping }}"> 
                                 {{ $topping->ten_topping }} + {{ number_format($topping->gia_topping, 0, ',', '.') }} đ
                             </label>
                         </div>
@@ -75,15 +78,20 @@
 
         function updateUI() {
             let total = basePrice;
-            
+
+            // Lấy size được chọn và cộng giá từ dataset
             const sizeChecked = document.querySelector(".size-option:checked");
-            if (sizeChecked) total += parseInt(sizeChecked.value);
-            
+            if (sizeChecked) total += parseInt(sizeChecked.dataset.gia);
+
+            // Cộng giá các topping được chọn
             document.querySelectorAll(".topping-option:checked").forEach(topping => {
-                total += parseInt(topping.value);
+                total += parseInt(topping.dataset.gia);
             });
 
-            priceDisplay.innerText = new Intl.NumberFormat("vi-VN").format(total);
+            // Cập nhật giá hiển thị
+            priceDisplay.innerText = new Intl.NumberFormat("vi-VN").format(total) + " đ";
+
+            // Thêm class 'selected' để đánh dấu size & topping được chọn
             document.querySelectorAll(".size-label, .topping-label").forEach(label => {
                 label.classList.toggle("selected", label.querySelector("input").checked);
             });
@@ -94,7 +102,7 @@
                 updateUI();
             }
         });
-        
+
         updateUI();
 
         document.getElementById("add-to-cart").addEventListener("click", function (e) {
@@ -105,21 +113,20 @@
 
             const sizeChecked = document.querySelector(".size-option:checked");
             if (!sizeChecked) {
-                showNotification && showNotification("Vui lòng chọn size trước khi thêm vào giỏ hàng!", "error");
-                addToCartBtn.disabled = false;
-                addToCartBtn.innerHTML = '<i class="fas fa-cart-plus me-2"></i> Thêm vào giỏ hàng';
+                showNotification("Vui lòng chọn size trước khi thêm vào giỏ hàng!", "error");
+                resetButton();
                 return;
             }
 
             const toppings = Array.from(document.querySelectorAll(".topping-option:checked"))
-                                .map(t => t.value);
+                                .map(t => t.value); // Chỉ lấy mã topping
 
             fetch("{{ route('giohang.add') }}", {
                 method: "POST",
                 body: JSON.stringify({
                     ma_san_pham: "{{ $sanPham->ma_san_pham }}",
-                    so_luong: 1,
-                    size: sizeChecked.value,
+                    so_luong: document.getElementById("so-luong").value,
+                    size: sizeChecked.value, // Chỉ lấy mã size
                     toppings: toppings
                 }),
                 headers: {
@@ -129,17 +136,20 @@
             })
             .then(response => response.json())
             .then(data => {
-                showNotification && showNotification(data.message, data.type);
+                showNotification(data.message, data.type);
             })
             .catch(error => {
                 console.error("Lỗi:", error);
-                showNotification && showNotification("Có lỗi xảy ra, vui lòng thử lại!", "error");
+                showNotification("Có lỗi xảy ra, vui lòng thử lại!", "error");
             })
-            .finally(() => {
-                addToCartBtn.disabled = false;
-                addToCartBtn.innerHTML = '<i class="fas fa-cart-plus me-2"></i> Thêm vào giỏ hàng';
-            });
+            .finally(resetButton);
         });
+
+        function resetButton() {
+            const addToCartBtn = document.getElementById("add-to-cart");
+            addToCartBtn.disabled = false;
+            addToCartBtn.innerHTML = '<i class="fas fa-cart-plus me-2"></i> Thêm vào giỏ hàng';
+        }
     });
 </script>
 @endsection

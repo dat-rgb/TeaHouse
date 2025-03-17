@@ -62,7 +62,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <a href="{{ route('home.thucDon') }}" class="nav-item nav-link">Thực đơn</a>
+                        <a href="{{ route('home.thucdon') }}" class="nav-item nav-link">Thực đơn</a>
                         <a href="" class="nav-item nav-link">Giới thiệu</a>
                         <div class="nav-item dropdown">
                             <a href="" class="nav-link">Chuyện nhà <i class="bi bi-chevron-down"></i></a>
