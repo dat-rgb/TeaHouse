@@ -2,7 +2,7 @@
     <div id="notification-box" class="notification-modal hidden">
         <span id="notification-icon" class="icon"></span>
         <span id="notification-message" class="message"></span>
-        <button class="close-btn" onclick="closeNotification()">&times;</button>
+       
     </div>
 </div>
 
@@ -10,7 +10,7 @@
    #notification-modal {
         position: fixed;
         top: 20px;
-        right: 10px;
+        left: 10px;
         z-index: 9999;
     }
 

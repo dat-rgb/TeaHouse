@@ -66,7 +66,7 @@
                                     <td class="text-center">
                                         <div class="d-flex align-items-center justify-content-center">
                                             <button class="btn btn-outline-secondary btn-sm" onclick="changeQuantity({{ $item['san_pham']->ma_san_pham }}, -1)">-</button>
-                                            <input type="number" class="form-control text-center mx-2 border-0" value="{{ $item['so_luong'] }}" min="1" style="width: 50px;" readonly>
+                                            <input type="number" class="form-control text-center mx-2 border-0" value="{{ $item['so_luong'] }}" min="1" style="width: 70px;">
                                             <button class="btn btn-outline-secondary btn-sm" onclick="changeQuantity({{ $item['san_pham']->ma_san_pham }}, 1)">+</button>
                                         </div>
                                     </td>
