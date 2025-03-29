@@ -97,7 +97,6 @@ class GioHangController extends Controller
         }
     }
 
-
     //Xóa sản phẩm khỏi giỏ hàng
     public function removeFromCart($maSanPham) {
         $maTaiKhoan = Session::get('ma_tai_khoan', 1);
@@ -116,5 +115,41 @@ class GioHangController extends Controller
         Session::forget("cart_$maTaiKhoan");
         return response()->json(['message' => 'Đã xóa toàn bộ giỏ hàng']);
     }
+    public function update(Request $request)
+{
+    $maTaiKhoan = session('ma_tai_khoan', 1);
+    $gioHang = session("cart_$maTaiKhoan", []);
+
+    $maSanPham = $request->ma_san_pham;
+    $soLuong = $request->so_luong;
+
+    if (isset($gioHang[$maSanPham])) {
+        $gioHang[$maSanPham]['so_luong'] = $soLuong;
+    }
+
+    session(["cart_$maTaiKhoan" => $gioHang]);
+
+    $tongTien = 0;
+    $itemTotal = 0;
+
+    foreach ($gioHang as $item) {
+        $giaSanPham = $item['san_pham']->gia;
+        $giaSize = $item['size']->gia_size ?? 0;
+        $giaTopping = is_array($item['toppings']) ? collect($item['toppings'])->sum('gia_topping') : 0;
+        $thanhTien = ($giaSanPham + $giaSize + $giaTopping) * $item['so_luong'];
+
+        $tongTien += $thanhTien;
+        if ($item['san_pham']->ma_san_pham == $maSanPham) {
+            $itemTotal = $thanhTien;
+        }
+    }
+
+    return response()->json([
+        'success' => true,
+        'tongTien' => $tongTien,
+        'itemTotal' => $itemTotal,
+    ]);
+}
+
 
 }

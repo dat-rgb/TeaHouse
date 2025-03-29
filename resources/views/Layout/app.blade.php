@@ -83,8 +83,9 @@
                         <!-- Nút giỏ hàng -->
                         <a href="{{ route('giohang.index') }}" class="btn btn-sm p-0 ms-3 position-relative" title="Giỏ hàng">
                             <i class="fa fa-shopping-cart fs-4"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
                                 {{ $soLuongGioHang }}
+                            </span> 
                         </a>
                         <!-- Nút đăng nhập với dropdown -->
                         <div class="dropdown d-inline-block ms-3">
@@ -183,6 +184,7 @@
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{asset('lib/wow/wow.min.js')}}"></script>
     <script src="{{asset('lib/easing/easing.min.js')}}"></script>
     <script src="{{asset('lib/waypoints/waypoints.min.js')}}"></script>

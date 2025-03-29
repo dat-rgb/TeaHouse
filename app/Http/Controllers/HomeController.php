@@ -30,5 +30,4 @@ class HomeController extends Controller
         return view('Home.thucDon', compact('viewData', 'tra', 'caPhe', 'sinhTo', 'nuocEp'));
     }
 
-
 }

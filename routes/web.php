@@ -8,8 +8,16 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KhachHangController;
 use App\Http\Controllers\SanPhamController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
+// Đếm số lượng sản phẩm trong giỏ hàng
+Route::get('/cart/count', function () {
+    $maTaiKhoan = session('ma_tai_khoan', 1);
+    $gioHang = session("cart_$maTaiKhoan", []);
+    $soLuong = array_sum(array_column($gioHang, 'so_luong'));
 
+    return response()->json(['soLuong' => $soLuong]);
+});
 // Trang đăng nhập
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -45,7 +53,9 @@ Route::middleware('auth')->group(function () {
 Route::prefix('gio-hang')->group(function () {
     Route::get('/', [GioHangController::class, 'gioHang'])->name('giohang.index');
     Route::post('/them', [GioHangController::class, 'addToCart'])->name('giohang.add');
+    Route::post('/cart/update', [GioHangController::class, 'update'])->name('giohang.update');
     Route::delete('/gio-hang/xoa/{maSanPham}', [GioHangController::class, 'removeFromCart'])->name('giohang.remove');
     Route::post('/xoa-tat-ca', [GioHangController::class, 'clearCart'])->name('giohang.clear');
 });
+
 
