@@ -35,6 +35,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::prefix('home')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
     Route::get('/lien-he', [HomeController::class, 'contact'])->name('home.contact');
+    Route::get('/gioi-thieu', [HomeController::class, 'about'])->name('home.about');
     Route::get('/thuc-don', [HomeController::class, 'thucDon'])->name('home.thucdon');
     Route::get('/gio-hang', [GioHangController::class, 'gioHang'])->name('home.giohang');
     Route::get('/not-found', [HomeController::class,'notfound'])->name('home.404');
@@ -69,3 +70,6 @@ Route::prefix('gio-hang')->group(function () {
 
 
 //404
+Route::fallback(function () {
+    return redirect()->route('home.404'); 
+});

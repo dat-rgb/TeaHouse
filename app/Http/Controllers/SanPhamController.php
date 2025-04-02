@@ -13,7 +13,11 @@ class SanPhamController extends Controller
     public function index()
     {
         $products = SanPham::where('trang_thai', 1)->paginate(8);
-        return view('SanPham.index', compact('products'));
+        $viewData = [
+            'title' => 'Sản Phẩm | Tea House Coffee & Tea',    
+            'products' => $products
+        ];
+        return view('SanPham.index', $viewData);
     }
     //Product Detail
     public function show($slug)
@@ -46,7 +50,15 @@ class SanPhamController extends Controller
             ->select('ma_topping', 'ten_topping', 'gia_topping')
             ->get();
 
-        return view('SanPham.productDetail', compact('sanPham', 'sizes', 'toppings', 'hienThiTopping'));
+        $viewData = [
+            'title' => $sanPham->ten_san_pham . ' | Tea House Coffee & Tea',
+            'sanPham' => $sanPham,
+            'sizes' => $sizes,
+            'toppings' => $toppings,
+            'hienThiTopping' => $hienThiTopping
+        ];
+
+        return view('SanPham.productDetail', $viewData);
     }
 
     public function filter(Request $request)

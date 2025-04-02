@@ -1,0 +1,111 @@
+/* Reset một số thuộc tính cơ bản */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Đặt font chữ chính cho toàn bộ trang */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #88B44E; /* Màu nền xanh lá dịu */
+    color: #fff;
+}
+
+/* Định dạng cho card đăng nhập */
+.card {
+    border: none;
+    background-color: #4C8A23; /* Màu xanh lá cây đậm hơn để làm nổi bật */
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Thêm shadow nhẹ để nổi bật hơn */
+}
+
+/* Tăng kích thước và độ đậm của tiêu đề */
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #f2f2f2; /* Màu sáng cho tiêu đề */
+}
+
+/* Chỉnh sửa khoảng cách và màu sắc cho đoạn văn */
+p {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #d1d1d1; /* Màu xám sáng cho đoạn văn */
+    margin-bottom: 30px;
+}
+
+/* Tạo sự chú ý cho các trường input */
+.form-outline {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    background-color: #2E4A28; /* Màu nền input đậm hơn */
+    color: #fff;
+    border: 1px solid #4C8A23; /* Màu border tương đồng với màu card */
+    border-radius: 0.5rem;
+    padding: 0.8rem;
+    font-size: 1rem;
+}
+
+.form-control:focus {
+    border-color: #FFB84E; /* Màu vàng cam nhẹ khi focus */
+    box-shadow: 0 0 5px rgba(255, 184, 78, 0.5); /* Ánh sáng vàng cam khi focus */
+}
+
+/* Label input khi không focus */
+.form-label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: #aaa;
+    pointer-events: none;
+}
+
+/* Chỉnh sửa màu nút đăng nhập */
+.btn-outline-light {
+    background-color: #FFB84E; /* Màu vàng cam nhẹ */
+    border: 2px solid #FFB84E; /* Để màu nút và border đồng nhất */
+    color: white;
+    font-weight: 500;
+    border-radius: 1rem;
+    padding: 10px 30px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background-color: white;
+    color: #FFB84E; /* Màu vàng cam khi hover */
+    transform: scale(1.05); /* Hiệu ứng hover */
+}
+
+/* Quên mật khẩu */
+small a {
+    color: #FFB84E; /* Màu vàng cam cho link */
+    text-decoration: none;
+}
+
+small a:hover {
+    text-decoration: underline;
+}
+
+/* Định dạng icon mạng xã hội */
+.d-flex a {
+    margin: 0 10px;
+    font-size: 1.5rem;
+}
+
+.d-flex a:hover {
+    color: #FFB84E; /* Màu vàng cam khi hover */
+}
+
+/* Tăng cường padding cho card body */
+.card-body {
+    padding: 2rem;
+}

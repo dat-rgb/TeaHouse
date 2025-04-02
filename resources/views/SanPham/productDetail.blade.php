@@ -1,5 +1,5 @@
 @extends('Layout.app')
-
+@section('title', $title)
 @section('content')
 <div class="container mt-4" style="padding: 50px;">
     <nav aria-label="breadcrumb">

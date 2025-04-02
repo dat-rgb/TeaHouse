@@ -1,5 +1,5 @@
 @extends('Layout.app')
-
+@section('title', 'Thực Đơn | Tea House Coffee & Tea')
 @section('content')
 
 <style>/* Thiết lập font và màu */
@@ -124,7 +124,7 @@
 
     .hidden { display: none; }
 </style>
-<div class="container" style="padding: 70px;">
+<div class="container" style="padding: 70px;" >
     <h1 class="text-center">{{ $viewData['title'] }}</h1>
     <h2 class="header-logo">Tea House</h2>
     @php
@@ -145,7 +145,7 @@
     @endphp
     @foreach ($categories as $key => $items)
     <h2>{{ $categoryNames[$key] ?? ucfirst($key) }}</h2>
-        <div class="slider-container">
+        <div class="slider-container" >
             <button class="hidden slider-btn left" id="prev-{{ $key }}">&#10094;</button>
             <div class="slider-wrapper" id="slider-{{ $key }}">
                 @foreach ($items as $item)
