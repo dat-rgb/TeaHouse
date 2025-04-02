@@ -66,7 +66,10 @@
                                     <td class="text-center">
                                         <div class="d-flex align-items-center justify-content-center">
                                             <button class="btn btn-outline-secondary btn-sm" onclick="changeQuantity({{ $item['san_pham']->ma_san_pham }}, -1)">-</button>
-                                            <input type="number" class="form-control text-center mx-2 border-0" value="{{ $item['so_luong'] }}" min="1" style="width: 70px;">
+                                            <input type="number" id="quantity-{{ $item['san_pham']->ma_san_pham }}" 
+                                                class="form-control text-center mx-2 border-0" 
+                                                value="{{ $item['so_luong'] }}" min="1" style="width: 70px;" 
+                                                onchange="updateQuantity(this, {{ $item['san_pham']->ma_san_pham }})">
                                             <button class="btn btn-outline-secondary btn-sm" onclick="changeQuantity({{ $item['san_pham']->ma_san_pham }}, 1)">+</button>
                                         </div>
                                     </td>
@@ -93,17 +96,42 @@
 </div>
 
 <script>
-    function changeQuantity(maSanPham, change) {
+     function changeQuantity(maSanPham, change) {
+        let quantityInput = $("#quantity-" + maSanPham);
+        let newQuantity = parseInt(quantityInput.val()) + change;
+        if (newQuantity < 1) return; // Không cho số lượng < 1
+        updateCart(maSanPham, newQuantity);
+    }
+
+    function updateQuantity(input, maSanPham) {
+        let newQuantity = parseInt(input.value);
+        if (isNaN(newQuantity) || newQuantity < 1) {
+            input.value = 1; // Nếu nhập sai, reset về 1
+            newQuantity = 1;
+        }
+        updateCart(maSanPham, newQuantity);
+    }
+
+    function updateCart(maSanPham, newQuantity) {
         $.ajax({
-            url: "{{ route('giohang.add') }}",
+            url: "{{ route('giohang.update') }}",
             method: "POST",
             data: {
                 ma_san_pham: maSanPham,
-                so_luong: change,
+                so_luong: newQuantity,
                 _token: "{{ csrf_token() }}"
             },
-            success: function() { location.reload(); },
-            error: function(xhr) { console.error(xhr.responseText); }
+            success: function(response) {
+                if (response.success) {
+                    $("#quantity-" + maSanPham).val(newQuantity);
+                    $("#subtotal").text(response.tongTien.toLocaleString() + "đ");
+                    $("#total").text((response.tongTien + 15000).toLocaleString() + "đ");
+                    $("#item-total-" + maSanPham).text(response.itemTotal.toLocaleString() + "đ");
+                }
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
+            }
         });
     }
 

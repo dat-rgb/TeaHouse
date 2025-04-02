@@ -97,7 +97,6 @@ class GioHangController extends Controller
         }
     }
 
-
     //Xóa sản phẩm khỏi giỏ hàng
     public function removeFromCart($maSanPham) {
         $maTaiKhoan = Session::get('ma_tai_khoan', 1);
@@ -116,5 +115,27 @@ class GioHangController extends Controller
         Session::forget("cart_$maTaiKhoan");
         return response()->json(['message' => 'Đã xóa toàn bộ giỏ hàng']);
     }
+    public function update(Request $request)
+    {
+        $maTaiKhoan = session('ma_tai_khoan', 1);
+        $gioHang = session("cart_$maTaiKhoan", []);
+
+        // Kiểm tra session có dữ liệu không
+        if (empty($gioHang)) {
+            return response()->json(['error' => 'Giỏ hàng trống hoặc session bị mất'], 400);
+        }
+
+        $maSanPham = $request->ma_san_pham;
+        $soLuong = $request->so_luong;
+
+        // Kiểm tra sản phẩm có tồn tại trong giỏ hàng không
+        if (!isset($gioHang[$maSanPham])) {
+            return response()->json(['error' => 'Sản phẩm không tồn tại trong giỏ hàng'], 400);
+        }
+
+        // Debug dữ liệu nhận được
+        dd($request->all());
+    }
+
 
 }
