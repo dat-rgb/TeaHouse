@@ -8,9 +8,16 @@ use App\Models\Topping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use App\Events\CartUpdated;
 
 class GioHangController extends Controller
 {
+    public function getCartCount()
+    {
+        // Giả sử giỏ hàng được lưu trữ trong session
+        return session('cart', collect())->count();
+    }
+
     public function gioHang()
     {
         $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
@@ -48,54 +55,59 @@ class GioHangController extends Controller
                 'so_luong' => $item['so_luong'] ?? 1,
                 'gia' => $item['gia'] ?? 0,
             ];
+            $viewData = [
+                'title' => 'Giỏ Hàng | Tea House coffee & Tea', 
+                'gioHang' => $gioHang   
+            ];
         }
 
-        return view('Home.giohang', compact('gioHang'));
+        return view('Home.giohang', $viewData);
     }
     //Thêm sản phẩm vào giỏ hàng
     public function addToCart(Request $request)
-    {
-        try {
-            $request->validate([
-                'ma_san_pham' => 'required|exists:san_phams,ma_san_pham',
-                'size' => 'required|numeric|exists:sizes,ma_size',
-                'so_luong' => 'required|integer|min:1',
-                'toppings' => 'array'
-            ]);
+{
+    try {
+        $request->validate([
+            'ma_san_pham' => 'required|exists:san_phams,ma_san_pham',
+            'size' => 'required|numeric|exists:sizes,ma_size',
+            'so_luong' => 'required|integer|min:1',
+            'toppings' => 'array'
+        ]);
 
-            $sanPham = SanPham::findOrFail($request->ma_san_pham);
-            $size = Sizes::findOrFail($request->size);
+        $sanPham = SanPham::findOrFail($request->ma_san_pham);
+        $size = Sizes::findOrFail($request->size);
 
-            // Kiểm tra topping hợp lệ
-            $toppings = Topping::whereIn('ma_topping', $request->toppings)->pluck('ma_topping')->toArray();
+        // Kiểm tra topping hợp lệ
+        $toppings = Topping::whereIn('ma_topping', $request->toppings)->pluck('ma_topping')->toArray();
 
-            $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
+        $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
 
-            $cart = session()->get("cart_{$maTaiKhoan}", []);
+        $cart = session()->get("cart_{$maTaiKhoan}", []);
 
-            $cartKey = "{$request->ma_san_pham}_{$request->size}_" . implode('_', $toppings);
+        $cartKey = "{$request->ma_san_pham}_{$request->size}_" . implode('_', $toppings);
 
-            if (isset($cart[$cartKey])) {
-                $cart[$cartKey]['so_luong'] += $request->so_luong;
-            } else {
-                $cart[$cartKey] = [
-                    'ma_san_pham' => $request->ma_san_pham,
-                    'ten_san_pham' => $sanPham->ten_san_pham,
-                    'gia' => $sanPham->gia + $size->gia_size + array_sum(Topping::whereIn('ma_topping', $toppings)->pluck('gia_topping')->toArray()),
-                    'size' => $request->size,
-                    'size_ten' => $size->ten_size,
-                    'so_luong' => $request->so_luong,
-                    'toppings' => $toppings,
-                ];
-            }
-
-            session()->put("cart_{$maTaiKhoan}", $cart);
-
-            return response()->json(['message' => 'Đã thêm vào giỏ hàng!', 'type' => 'success']);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Có lỗi xảy ra!', 'type' => 'error'], 500);
+        if (isset($cart[$cartKey])) {
+            $cart[$cartKey]['so_luong'] += $request->so_luong;
+        } else {
+            $cart[$cartKey] = [
+                'ma_san_pham' => $request->ma_san_pham,
+                'ten_san_pham' => $sanPham->ten_san_pham,
+                'gia' => $sanPham->gia + $size->gia_size + array_sum(Topping::whereIn('ma_topping', $toppings)->pluck('gia_topping')->toArray()),
+                'size' => $request->size,
+                'size_ten' => $size->ten_size,
+                'so_luong' => $request->so_luong,
+                'toppings' => $toppings,
+            ];
         }
+
+        session()->put("cart_{$maTaiKhoan}", $cart);
+     
+        return response()->json(['message' => 'Đã thêm vào giỏ hàng!', 'type' => 'success']);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Có lỗi xảy ra!', 'type' => 'error'], 500);
     }
+}
+
 
     //Xóa sản phẩm khỏi giỏ hàng
     public function removeFromCart($maSanPham) {

@@ -1,4 +1,5 @@
 @extends('Layout.app')
+@section('title', $title)
 @section('content')
 
 <!-- Banner -->
@@ -36,7 +37,7 @@
                             </tr>
                         </thead>
                         <tbody id="cart-items">
-                            @foreach ($gioHang as $item)
+                            @foreach ($gioHang as $index => $item)
                                 @php 
                                     $giaSanPham = $item['san_pham']->gia;
                                     $giaSize = $item['size']->gia_size ?? 0;
@@ -46,7 +47,10 @@
                                 @endphp
                                 <tr id="cart-item-{{ $item['san_pham']->ma_san_pham }}" class="border-bottom align-middle">
                                     <td class="d-flex align-items-center p-3 text-start">
-                                        <img src="{{ asset('img/product/' . $item['san_pham']->hinh_anh) }}" alt="Sản phẩm" width="70" class="rounded">
+                                        <span>{{ $loop->iteration }}</span> <!-- Đánh số thứ tự -->
+                                        <a href="{{ route('sanpham.show', $item['san_pham']->slug) }}">
+                                            <img src="{{ asset('img/product/' . $item['san_pham']->hinh_anh) }}" alt="Sản phẩm" width="70" class="rounded">
+                                        </a>
                                         <div class="ms-3">
                                             <strong>{{ $item['san_pham']->ten_san_pham }}</strong><br>
                                             @if ($item['size'])
