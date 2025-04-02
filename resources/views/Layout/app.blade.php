@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Tea House</title>
+    <title>@yield('title', 'Tea House')</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <a href="{{ route('home.thucdon') }}" class="nav-item nav-link">Thực đơn</a>
-                        <a href="" class="nav-item nav-link">Giới thiệu</a>
+                        <a href="{{ route('home.about') }}" class="nav-item nav-link">Giới thiệu</a>
                         <div class="nav-item dropdown">
                             <a href="" class="nav-link">Chuyện nhà <i class="bi bi-chevron-down"></i></a>
                             <div class="m-0 dropdown-menu bg-light rounded-0">
