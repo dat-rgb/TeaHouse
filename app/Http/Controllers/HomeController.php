@@ -29,5 +29,7 @@ class HomeController extends Controller
 
         return view('Home.thucDon', compact('viewData', 'tra', 'caPhe', 'sinhTo', 'nuocEp'));
     }
-
+    public function notfound(){
+        return view('Home.404');
+    }
 }

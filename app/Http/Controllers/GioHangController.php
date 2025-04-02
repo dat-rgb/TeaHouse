@@ -116,40 +116,26 @@ class GioHangController extends Controller
         return response()->json(['message' => 'Đã xóa toàn bộ giỏ hàng']);
     }
     public function update(Request $request)
-{
-    $maTaiKhoan = session('ma_tai_khoan', 1);
-    $gioHang = session("cart_$maTaiKhoan", []);
+    {
+        $maTaiKhoan = session('ma_tai_khoan', 1);
+        $gioHang = session("cart_$maTaiKhoan", []);
 
-    $maSanPham = $request->ma_san_pham;
-    $soLuong = $request->so_luong;
-
-    if (isset($gioHang[$maSanPham])) {
-        $gioHang[$maSanPham]['so_luong'] = $soLuong;
-    }
-
-    session(["cart_$maTaiKhoan" => $gioHang]);
-
-    $tongTien = 0;
-    $itemTotal = 0;
-
-    foreach ($gioHang as $item) {
-        $giaSanPham = $item['san_pham']->gia;
-        $giaSize = $item['size']->gia_size ?? 0;
-        $giaTopping = is_array($item['toppings']) ? collect($item['toppings'])->sum('gia_topping') : 0;
-        $thanhTien = ($giaSanPham + $giaSize + $giaTopping) * $item['so_luong'];
-
-        $tongTien += $thanhTien;
-        if ($item['san_pham']->ma_san_pham == $maSanPham) {
-            $itemTotal = $thanhTien;
+        // Kiểm tra session có dữ liệu không
+        if (empty($gioHang)) {
+            return response()->json(['error' => 'Giỏ hàng trống hoặc session bị mất'], 400);
         }
-    }
 
-    return response()->json([
-        'success' => true,
-        'tongTien' => $tongTien,
-        'itemTotal' => $itemTotal,
-    ]);
-}
+        $maSanPham = $request->ma_san_pham;
+        $soLuong = $request->so_luong;
+
+        // Kiểm tra sản phẩm có tồn tại trong giỏ hàng không
+        if (!isset($gioHang[$maSanPham])) {
+            return response()->json(['error' => 'Sản phẩm không tồn tại trong giỏ hàng'], 400);
+        }
+
+        // Debug dữ liệu nhận được
+        dd($request->all());
+    }
 
 
 }

@@ -152,7 +152,7 @@
                     <div class="product-card">
                         <div class="border-0 shadow-sm card">
                             <div class="position-relative d-flex justify-content-center align-items-center" style="height: 250px;">
-                                <a href="{{ route('sanpham.show',$item->ma_san_pham) }}">
+                                <a href="{{ route('sanpham.show',$item->slug) }}">
                                     <img src="{{ asset('img/product/' . $item->hinh_anh) }}" class="p-3 img-fluid product-image"
                                     alt="{{ $item->ten_san_pham }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                                 </a>

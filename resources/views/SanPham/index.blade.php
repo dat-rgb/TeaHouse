@@ -25,22 +25,5 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('.category-filter').click(function (e) {
-            e.preventDefault();
-            let maDanhMuc = $(this).data('id');
-
-            $.ajax({
-                url: "{{ route('sanpham.filter') }}",
-                type: "GET",
-                data: { ma_danh_muc: maDanhMuc },
-                success: function (response) {
-                    $('#product-list').html(response);
-                }
-            });
-        });
-    });
-</script>
 
 @endsection

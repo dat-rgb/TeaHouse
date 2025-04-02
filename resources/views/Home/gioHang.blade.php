@@ -157,8 +157,6 @@
             error: function(xhr) { console.error(xhr.responseText); }
         });
     }
-
-    
 </script>
 
 @endsection

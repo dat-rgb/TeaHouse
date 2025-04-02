@@ -47,7 +47,7 @@
         <div class="col-md-3 mb-3">
             <div class="card product-card shadow-sm border-0">
                 <div class="position-relative d-flex justify-content-center align-items-center" style="height: 250px;">
-                <a href="{{ route('sanpham.show', $product->ma_san_pham) }}">
+                <a href="{{ route('sanpham.show', $product->slug) }}">
                     <img src="{{ asset('img/product/' . $product->hinh_anh) }}" 
                         class="img-fluid product-image p-3" 
                         alt="{{ $product->ten_san_pham }}" 

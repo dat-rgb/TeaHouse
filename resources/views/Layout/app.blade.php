@@ -12,6 +12,8 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -25,8 +27,25 @@
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    @stack('styles')
+
 </head>
 <body>
+    @if(session('success'))
+        <script>
+            window.onload = function() {
+                showNotification("{{ session('success') }}", "success");
+            };
+        </script>
+    @endif
+
+    @if(session('error'))
+        <script>
+            window.onload = function() {
+                showNotification("{{ session('error') }}", "error");
+            };
+        </script>
+    @endif
     <!-- Spinner Start -->
     <div id="spinner" class="bg-white show position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
@@ -103,7 +122,7 @@
                                     </form>
                                 @else
                                     <li><a class="cursor-pointer dropdown-item" onclick="openLoginPopup()">Đăng nhập</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('register') }}">Đăng ký</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('auth.register.show') }}">Đăng ký</a></li>
                                 @endauth
                             </ul>
                         </div>
@@ -194,5 +213,7 @@
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <!-- Template Javascript -->
     <script src="{{asset('js/main.js')}}"></script>
+    @stack('scripts')
+
 </body>
 </html>
