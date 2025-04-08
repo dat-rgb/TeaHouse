@@ -1,5 +1,5 @@
 @extends('Layout.app')
-
+@section('title', $title)
 @section('content')
 <div class="container mt-4" style="padding: 50px;">
     <nav aria-label="breadcrumb">
@@ -39,19 +39,23 @@
                 <h6 class="fw-semibold mb-2">Số lượng</h6>
                 <input type="number" id="so-luong" class="form-control w-25" value="1" min="1">
             </div>
-            <div class="mb-3">
-                <h6 class="fw-semibold mb-2">Topping</h6>
-                <div class="row g-2">
-                    @foreach ($toppings as $topping)
-                        <div class="col-6 col-sm-4">
-                            <label class="btn btn-outline-secondary btn-sm w-100 topping-label">
-                                <input type="checkbox" class="topping-option d-none" value="{{ $topping->ma_topping }}" data-gia="{{ $topping->gia_topping }}"> 
-                                {{ $topping->ten_topping }} + {{ number_format($topping->gia_topping, 0, ',', '.') }} đ
-                            </label>
-                        </div>
-                    @endforeach
+            @if ($hienThiTopping)
+                <div class="mb-3">
+                    <h6 class="fw-semibold mb-2">Topping</h6>
+                    <div class="row g-2">
+                        @foreach ($toppings as $topping)
+                            <div class="col-6 col-sm-4">
+                                <label class="btn btn-outline-secondary btn-sm w-100 topping-label">
+                                    <input type="checkbox" class="topping-option d-none" 
+                                        value="{{ $topping->ma_topping }}" 
+                                        data-gia="{{ $topping->gia_topping }}"> 
+                                    {{ $topping->ten_topping }} + {{ number_format($topping->gia_topping, 0, ',', '.') }} đ
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
+            @endif
             <div class="d-flex gap-2">
                 <button class="btn btn-warning flex-fill">
                     <i class="fas fa-truck me-2"></i> Đặt giao tận nơi

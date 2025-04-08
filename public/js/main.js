@@ -119,3 +119,15 @@ document.getElementById("overlay").addEventListener("click", closeSearch);
 function openLoginPopup() {
     $('#loginPopup').modal('show');
 }
+
+//cout cart
+function capNhatGioHang() {
+    $.ajax({
+        url: '/cart/count',
+        type: 'GET',
+        success: function(response) {
+            $('#cart-count').text(response.soLuong);
+        }
+    });
+}
+setInterval(capNhatGioHang, 1000);

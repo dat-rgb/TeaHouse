@@ -1,8 +1,6 @@
 <div id="notification-modal" class="hidden fixed top-5 right-5 z-50">
-    <div id="notification-box" class="notification-modal hidden">
-        <span id="notification-icon" class="icon"></span>
-        <span id="notification-message" class="message"></span>
-        <button class="close-btn" onclick="closeNotification()">&times;</button>
+    <div id="notification-box-container">
+        <!-- Các thông báo -->
     </div>
 </div>
 
@@ -10,8 +8,14 @@
    #notification-modal {
         position: fixed;
         top: 20px;
-        right: 10px;
+        left: 10px;
         z-index: 9999;
+    }
+
+    #notification-box-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .notification-modal {
@@ -60,20 +64,43 @@
 </style>
 
 <script>
+    // Hàm hiển thị thông báo
     function showNotification(message, type = "success") {
-        const modal = document.getElementById("notification-box");
-        const icon = document.getElementById("notification-icon");
-        const msg = document.getElementById("notification-message");
-
+        // Tạo một phần tử thông báo mới
+        const notificationBox = document.createElement("div");
+        notificationBox.classList.add("notification-modal", type);
+        
+        const icon = document.createElement("span");
+        icon.classList.add("icon");
         icon.innerHTML = type === "success" ? "✅" : "❌";
-        msg.textContent = message;
-        modal.classList.add("show", type);
 
-        setTimeout(() => closeNotification(), 3000);
+        const msg = document.createElement("span");
+        msg.classList.add("message");
+        msg.textContent = message;
+
+        notificationBox.appendChild(icon);
+        notificationBox.appendChild(msg);
+
+        // Thêm thông báo vào container
+        const container = document.getElementById("notification-box-container");
+        container.appendChild(notificationBox);
+
+        // Hiển thị thông báo
+        setTimeout(() => {
+            notificationBox.classList.add("show");
+        }, 10);
+
+        // Tự động đóng thông báo sau 3 giây
+        setTimeout(() => closeNotification(notificationBox), 3000);
     }
 
-    function closeNotification() {
-        const modal = document.getElementById("notification-box");
-        modal.classList.remove("show", "success", "error");
+    // Hàm đóng thông báo
+    function closeNotification(notificationBox) {
+        notificationBox.classList.remove("show");
+
+        // Xóa thông báo khỏi DOM sau khi kết thúc animation
+        setTimeout(() => {
+            notificationBox.remove();
+        }, 300);
     }
 </script>

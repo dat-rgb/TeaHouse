@@ -1,5 +1,5 @@
 @extends('Layout.app')
-
+@section('title', 'Thực Đơn | Tea House Coffee & Tea')
 @section('content')
 
 <style>/* Thiết lập font và màu */
@@ -124,7 +124,7 @@
 
     .hidden { display: none; }
 </style>
-<div class="container" style="padding: 70px;">
+<div class="container" style="padding: 70px;" >
     <h1 class="text-center">{{ $viewData['title'] }}</h1>
     <h2 class="header-logo">Tea House</h2>
     @php
@@ -145,14 +145,14 @@
     @endphp
     @foreach ($categories as $key => $items)
     <h2>{{ $categoryNames[$key] ?? ucfirst($key) }}</h2>
-        <div class="slider-container">
+        <div class="slider-container" >
             <button class="hidden slider-btn left" id="prev-{{ $key }}">&#10094;</button>
             <div class="slider-wrapper" id="slider-{{ $key }}">
                 @foreach ($items as $item)
                     <div class="product-card">
                         <div class="border-0 shadow-sm card">
                             <div class="position-relative d-flex justify-content-center align-items-center" style="height: 250px;">
-                                <a href="{{ route('sanpham.show',$item->ma_san_pham) }}">
+                                <a href="{{ route('sanpham.show',$item->slug) }}">
                                     <img src="{{ asset('img/product/' . $item->hinh_anh) }}" class="p-3 img-fluid product-image"
                                     alt="{{ $item->ten_san_pham }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                                 </a>
