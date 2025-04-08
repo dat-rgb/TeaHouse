@@ -61,15 +61,23 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
-                                            <button class="btn btn-outline-dark btn-sm">-</button>
-                                            <span class="px-2">{{ $item['so_luong'] }}</span>
-                                            <button class="btn btn-outline-dark btn-sm">+</button>
+                                            @foreach($gioHang as $key => $item)
+                                                <div class="btn-group align-items-center" role="group">
+                                                    <a href="{{ route('cart.updateQuantity', ['key' => $key, 'type' => 'decrease']) }}"
+                                                    class="btn btn-outline-secondary btn-sm">−</a>
+                                                    
+                                                    <span class="px-3 d-flex align-items-center">{{ $item['so_luong'] }}</span>
+                                                    
+                                                    <a href="{{ route('cart.updateQuantity', ['key' => $key, 'type' => 'increase']) }}"
+                                                    class="btn btn-outline-secondary btn-sm">+</a>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </td>
                                     <td>{{ number_format($item['gia'], 0, ',', '.') }} đ</td>
                                     <td>{{ number_format($thanhTien, 0, ',', '.') }} đ</td>
                                     <td class="text-center">
-                                        <button class="btn btn-warning btn-sm edit-product-btn" data-product-id="{{ $key }}">
+                                        <button class="btn btn-warning btn-sm" onclick="openEditModal('{{ $key }}')">
                                             <i class="bi bi-pencil-square"></i> Sửa
                                         </button>
                                         <a class="text-danger" href="#">Xóa</a>
@@ -83,6 +91,10 @@
                             @endif
                         </tbody>
                     </table>
+                    <form action="{{ route('giohang.clear') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger">Xóa tất cả</button>
+                    </form>
                 </div>
             </div>
 
@@ -93,7 +105,7 @@
                         <h5 class="card-title mb-3">Thông tin đơn hàng</h5>
                         <div class="d-flex justify-content-between small">
                             <span>Số lượng sản phẩm:</span>
-                            <span>{{ count($gioHang) }}</span>
+                            <span>{{ collect($gioHang)->sum('so_luong') }}</span>
                         </div>
                         <div class="d-flex justify-content-between small my-2">
                             <span>Tạm tính:</span>
@@ -105,9 +117,9 @@
                             <span class="text-danger">{{ number_format($tongTien, 0, ',', '.') }} đ</span>
                         </div>
                         <div class="mt-4 d-grid gap-2">
-                            <button class="btn btn-outline-danger">🗑 Xóa tất cả</button>
-                            <a href="#" class="btn btn-outline-secondary">🛍 Tiếp tục mua hàng</a>
-                            <a href="#" class="btn btn-success">💳 Thanh toán</a>
+
+                            <a href="#" class="btn btn-outline-secondary">Tiếp tục mua hàng</a>
+                            <a href="#" class="btn btn-success">Thanh toán</a>
                         </div>
                     </div>
                 </div>
@@ -117,32 +129,11 @@
         <div class="text-center py-5">
             <img src="{{ asset('img/empty-cart.jpg') }}" alt="Giỏ hàng trống" style="max-width: 200px;">
             <h4 class="mt-4 text-muted">Giỏ hàng của bạn đang trống!</h4>
-            <a href="{{ route('home.index') }}" class="btn btn-primary mt-3">Quay lại mua sắm</a>
+            <a href="{{ route('sanpham.index') }}" class="btn btn-primary mt-3">Quay lại mua sắm</a>
         </div>
     @endif
 </div>
 
- <script>
-$(document).ready(function() {
-    $('.edit-product-btn').on('click', function() {
-        var productId = $(this).data('product-id');
-        $.ajax({
-            url: '/cart/edit/' + productId,
-            type: 'GET',
-            success: function(response) {
-                $('#editProductModal .modal-body').html(response);
-                var modal = new bootstrap.Modal(document.getElementById('editProductModal'));
-                modal.show();
-            },
-            error: function() {
-                alert('Đã xảy ra lỗi khi tải thông tin sản phẩm.');
-            }
-        });
-    });
-});
-</script>
-
-@include('components.cart.edit-cart-modal')
 @endsection
 
 

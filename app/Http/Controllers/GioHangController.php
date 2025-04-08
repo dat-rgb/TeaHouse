@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use App\Events\CartUpdated;
+use Str;
 
 class GioHangController extends Controller
 {
@@ -52,7 +53,7 @@ class GioHangController extends Controller
             $tongTien += $tongTienSP;
 
             // Đưa vào giỏ hàng để hiển thị
-            $gioHang[] = [
+            $gioHang[$key] = [
                 'cart_key' => $key,
                 'ma_san_pham' => $item['ma_san_pham'],
                 'ten_san_pham' => $sanPham->ten_san_pham ?? '[SP không tồn tại]',
@@ -75,8 +76,6 @@ class GioHangController extends Controller
             'tongTien' => $tongTien
         ]);
     }
-
-
     //Thêm sản phẩm vào giỏ hàng
     public function addToCart(Request $request)
     {
@@ -141,52 +140,37 @@ class GioHangController extends Controller
             return response()->json(['message' => 'Có lỗi xảy ra!', 'type' => 'error'], 500);
         }
     }
-    //edit 
-    public function edit($id)
+    //cap nhat so luong
+    public function updateQuantity(Request $request, $key, $type)
     {
-        $gioHang = session('gioHang', []);
-        if (!isset($gioHang[$id])) {
-            return response('Không tìm thấy sản phẩm.', 404);
+        $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
+        $cartKey = "cart_{$maTaiKhoan}";
+        $cart = session()->get($cartKey, []);
+
+        if (isset($cart[$key])) {
+            if ($type === 'increase') {
+                $cart[$key]['so_luong'] += 1;
+            } elseif ($type === 'decrease') {
+                $cart[$key]['so_luong'] -= 1;
+                if ($cart[$key]['so_luong'] <= 0) {
+                    unset($cart[$key]);
+                    session()->put($cartKey, $cart);
+                    return redirect()->back();
+                }
+            }
+            $cart[$key]['tong_tien'] = $cart[$key]['gia'] * $cart[$key]['so_luong'];
+            session()->put($cartKey, $cart);
         }
 
-        $item = $gioHang[$id];
-        return view('components.cart.edit-cart-modal', compact('item', 'id'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $gioHang = session('gioHang', []);
-        if (!isset($gioHang[$id])) {
-            return redirect()->back()->with('error', 'Sản phẩm không tồn tại.');
-        }
-
-        $gioHang[$id]['so_luong'] = $request->input('so_luong');
-        $gioHang[$id]['size'] = $request->input('size');
-        $gioHang[$id]['topping'] = $request->input('topping', []);
-
-        session(['gioHang' => $gioHang]);
-
-        return redirect()->route('cart.index')->with('success', 'Cập nhật sản phẩm thành công!');
-    }
-
-
-    //Xóa sản phẩm khỏi giỏ hàng
-    public function removeFromCart($maSanPham) {
-        $maTaiKhoan = Session::get('ma_tai_khoan', 1);
-        $gioHang = Session::get("cart_$maTaiKhoan", []);
-
-        if (isset($gioHang[$maSanPham])) {
-            unset($gioHang[$maSanPham]);
-            Session::put("cart_$maTaiKhoan", $gioHang);
-        }
-
-        return response()->json(['message' => 'Xóa sản phẩm thành công!', 'cart' => $gioHang]);
+        return redirect()->back();
     }
     //Xóa giỏ hàng
-    public function clearCart() {
-        $maTaiKhoan = Session::get('ma_tai_khoan', 1);
-        Session::forget("cart_$maTaiKhoan");
-        return response()->json(['message' => 'Đã xóa toàn bộ giỏ hàng']);
-    }
+    public function clearCart()
+    {
+        $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
 
+        session()->forget("cart_{$maTaiKhoan}");
+
+        return redirect()->route('giohang.index')->with('success', 'Đã xoá toàn bộ giỏ hàng.');
+    }
 }
