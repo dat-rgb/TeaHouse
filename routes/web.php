@@ -63,9 +63,8 @@ Route::middleware('auth')->group(function () {
 Route::prefix('gio-hang')->group(function () {
     Route::get('/', [GioHangController::class, 'gioHang'])->name('giohang.index');
     Route::post('/them', [GioHangController::class, 'addToCart'])->name('giohang.add');
-    Route::post('/cart/update', [GioHangController::class, 'update'])->name('giohang.update');
-    Route::delete('/gio-hang/xoa/{maSanPham}', [GioHangController::class, 'removeFromCart'])->name('giohang.remove');
     Route::post('/xoa-tat-ca', [GioHangController::class, 'clearCart'])->name('giohang.clear');
+    Route::get('/cap-nhat/{key}/{type}', [GioHangController::class, 'updateQuantity'])->name('cart.updateQuantity');
 });
 
 
