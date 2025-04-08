@@ -66,6 +66,10 @@ Route::prefix('gio-hang')->group(function () {
     Route::post('/cart/update', [GioHangController::class, 'update'])->name('giohang.update');
     Route::delete('/gio-hang/xoa/{maSanPham}', [GioHangController::class, 'removeFromCart'])->name('giohang.remove');
     Route::post('/xoa-tat-ca', [GioHangController::class, 'clearCart'])->name('giohang.clear');
+    Route::get('/edit/{id}', [GioHangController::class, 'edit']);
+    Route::put('/update/{id}', [GioHangController::class, 'update'])->name('cart.update');
+
+
 });
 
 

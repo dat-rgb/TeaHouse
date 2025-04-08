@@ -14,102 +14,160 @@ class GioHangController extends Controller
 {
 
     public function gioHang()
-{
-    $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
+    {
+        $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
 
-    // Lấy giỏ hàng từ session
-    $cart = session()->get("cart_{$maTaiKhoan}", []);
+        // Lấy giỏ hàng từ session
+        $cart = session()->get("cart_{$maTaiKhoan}", []);
 
-    if (empty($cart)) {
-        return view('Home.giohang', ['gioHang' => [], 'tongTien' => 0]);
-    }
-
-    // Lọc danh sách ID chỉ khi key tồn tại
-    $maSanPhams = collect($cart)->pluck('ma_san_pham')->filter()->unique()->toArray();
-    $maSizes = collect($cart)->pluck('size')->filter()->unique()->toArray();
-    $maToppings = collect($cart)->pluck('toppings')->flatten()->filter()->unique()->toArray();
-
-    // Truy vấn dữ liệu từ database
-    $sanPhams = SanPham::whereIn('ma_san_pham', $maSanPhams)->get()->keyBy('ma_san_pham');
-    $sizes = Sizes::whereIn('ma_size', $maSizes)->get()->keyBy('ma_size');
-    $toppings = Topping::whereIn('ma_topping', $maToppings)->get()->keyBy('ma_topping');
-
-    // Xây dựng giỏ hàng đầy đủ thông tin và tính tổng tiền
-    $gioHang = [];
-    $tongTien = 0; // Khởi tạo tổng tiền
-
-    foreach ($cart as $cartKey => $item) {
-        // Kiểm tra key tồn tại trước khi truy xuất
-        if (!isset($item['ma_san_pham'], $item['size'], $item['toppings'])) {
-            continue;
+        if (empty($cart)) {
+            return view('Home.gioHang', ['cart' => [], 'tongTien' => 0]);
         }
 
-        // Tính giá trị sản phẩm
-        $giaSanPham = $sanPhams[$item['ma_san_pham']] ?? 0;
-        $giaSize = $sizes[$item['size']] ?? 0;
-        $giaTopping = collect($item['toppings'])->map(fn($id) => $toppings[$id] ?? 0)->sum('gia_topping');
-        $tongTienSanPham = ($giaSanPham->gia ?? 0 + $giaSize->gia_size ?? 0 + $giaTopping) * $item['so_luong'];
-        
-        // Cộng dồn vào tổng tiền
-        $tongTien += $tongTienSanPham;
+        // Lấy danh sách mã
+        $maSanPhams = collect($cart)->pluck('ma_san_pham')->unique()->toArray();
+        $maSizes = collect($cart)->pluck('size')->unique()->toArray();
+        $maToppings = collect($cart)->pluck('toppings')->flatten()->unique()->toArray();
 
-        $gioHang[] = [
-            'cart_key' => $cartKey,
-            'san_pham' => $sanPhams[$item['ma_san_pham']] ?? null,
-            'size' => $sizes[$item['size']] ?? null,
-            'toppings' => collect($item['toppings'])->map(fn($id) => $toppings[$id] ?? null)->filter(),
-            'so_luong' => $item['so_luong'] ?? 1,
-            'gia' => $item['gia'] ?? 0,
-            'tongTienSanPham' => $tongTienSanPham, // Thêm thông tin về thành tiền của từng sản phẩm
-        ];
+        // Truy vấn dữ liệu liên quan
+        $sanPhams = SanPham::whereIn('ma_san_pham', $maSanPhams)->get()->keyBy('ma_san_pham');
+        $sizes = Sizes::whereIn('ma_size', $maSizes)->get()->keyBy('ma_size');
+        $toppings = Topping::whereIn('ma_topping', $maToppings)->get()->keyBy('ma_topping');
+
+        $gioHang = [];
+        $tongTien = 0;
+
+        foreach ($cart as $key => $item) {
+            $sanPham = $sanPhams[$item['ma_san_pham']] ?? null;
+            $size = $sizes[$item['size']] ?? null;
+            $dsTopping = collect($item['toppings'])->map(fn($id) => $toppings[$id] ?? null)->filter();
+
+            // Giá từng thành phần
+            $giaSP = $sanPham->gia ?? 0;
+            $giaSize = $size->gia_size ?? 0;
+            $giaTopping = $dsTopping->sum('gia_topping');
+
+            // Tổng cho từng sản phẩm
+            $tongTienSP = ($giaSP + $giaSize + $giaTopping) * ($item['so_luong'] ?? 1);
+            $tongTien += $tongTienSP;
+
+            // Đưa vào giỏ hàng để hiển thị
+            $gioHang[] = [
+                'cart_key' => $key,
+                'ma_san_pham' => $item['ma_san_pham'],
+                'ten_san_pham' => $sanPham->ten_san_pham ?? '[SP không tồn tại]',
+                'hinh_anh' => $sanPham->hinh_anh ?? 'default.jpg',
+                'gia' => $giaSP + $giaSize + $giaTopping,
+                'tongTienSanPham' => $tongTienSP,
+                'so_luong' => $item['so_luong'] ?? 1,
+                'size_ten' => $size->ten_size ?? 'Không rõ',
+                'toppings' => $dsTopping->map(function ($tp) {
+                    return [
+                        'ten_topping' => $tp->ten_topping,
+                        'gia_topping' => $tp->gia_topping,
+                    ];
+                }),
+            ];
+        }
+       
+        return view('Home.giohang', [
+            'gioHang' => $gioHang,
+            'tongTien' => $tongTien
+        ]);
     }
 
-    return view('Home.giohang', compact('gioHang', 'tongTien')); // Trả về giỏ hàng và tổng tiền
-}
 
     //Thêm sản phẩm vào giỏ hàng
     public function addToCart(Request $request)
-{
-    try {
-        $request->validate([
-            'ma_san_pham' => 'required|exists:san_phams,ma_san_pham',
-            'size' => 'required|numeric|exists:sizes,ma_size',
-            'so_luong' => 'required|integer|min:1',
-            'toppings' => 'array'
-        ]);
+    {
+        try {
+            $request->validate([
+                'ma_san_pham' => 'required|exists:san_phams,ma_san_pham',
+                'size' => 'required|numeric|exists:sizes,ma_size',
+                'so_luong' => 'required|integer|min:1',
+                'toppings' => 'array'
+            ]);
 
-        $sanPham = SanPham::findOrFail($request->ma_san_pham);
-        $size = Sizes::findOrFail($request->size);
+            $sanPham = SanPham::findOrFail($request->ma_san_pham);
+            $size = Sizes::findOrFail($request->size);
+            $soLuong = $request->so_luong;
 
-        // Kiểm tra topping hợp lệ
-        $toppings = Topping::whereIn('ma_topping', $request->toppings)->pluck('ma_topping')->toArray();
+            // Xử lý danh sách topping
+            $toppings = [];
+            $tongGiaTopping = 0;
 
-        $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
+            if ($request->has('toppings') && is_array($request->toppings)) {
+                $toppingList = Topping::whereIn('ma_topping', $request->toppings)->get();
+                foreach ($toppingList as $topping) {
+                    $toppings[] = [
+                        'ma_topping' => $topping->ma_topping,
+                        'ten_topping' => $topping->ten_topping,
+                        'gia_topping' => $topping->gia_topping,
+                    ];
+                    $tongGiaTopping += $topping->gia_topping;
+                }
+            }
 
-        $cart = session()->get("cart_{$maTaiKhoan}", []);
+            // Giá 1 sản phẩm (bao gồm giá size và topping)
+            $gia1SanPham = $sanPham->gia + $size->gia_size + $tongGiaTopping;
 
-        $cartKey = "{$request->ma_san_pham}_{$request->size}_" . implode('_', $toppings);
+            // Tạo key định danh cho sản phẩm trong giỏ hàng
+            $toppingKey = implode('_', collect($toppings)->pluck('ma_topping')->toArray());
+            $cartKey = "{$request->ma_san_pham}_{$request->size}_{$toppingKey}";
 
-        if (isset($cart[$cartKey])) {
-            $cart[$cartKey]['so_luong'] += $request->so_luong;
-        } else {
-            $cart[$cartKey] = [
-                'ma_san_pham' => $request->ma_san_pham,
-                'ten_san_pham' => $sanPham->ten_san_pham,
-                'gia' => $sanPham->gia + $size->gia_size + array_sum(Topping::whereIn('ma_topping', $toppings)->pluck('gia_topping')->toArray()),
-                'size' => $request->size,
-                'size_ten' => $size->ten_size,
-                'so_luong' => $request->so_luong,
-                'toppings' => $toppings,
-            ];
+            // Lấy giỏ hàng từ session
+            $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
+            $cart = session()->get("cart_{$maTaiKhoan}", []);
+
+            if (isset($cart[$cartKey])) {
+                $cart[$cartKey]['so_luong'] += $soLuong;
+            } else {
+                $cart[$cartKey] = [
+                    'ma_san_pham' => $sanPham->ma_san_pham,
+                    'ten_san_pham' => $sanPham->ten_san_pham,
+                    'gia' => $gia1SanPham,
+                    'so_luong' => $soLuong,
+                    'size' => $size->ma_size,
+                    'size_ten' => $size->ten_size,
+                    'toppings' => $toppings,
+                    'tong_tien' => $gia1SanPham * $soLuong
+                ];
+            }
+
+            session()->put("cart_{$maTaiKhoan}", $cart);
+
+            return response()->json(['message' => 'Đã thêm vào giỏ hàng!', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Có lỗi xảy ra!', 'type' => 'error'], 500);
+        }
+    }
+    //edit 
+    public function edit($id)
+    {
+        $gioHang = session('gioHang', []);
+        if (!isset($gioHang[$id])) {
+            return response('Không tìm thấy sản phẩm.', 404);
         }
 
-        session()->put("cart_{$maTaiKhoan}", $cart);
-        return response()->json(['message' => 'Đã thêm vào giỏ hàng!', 'type' => 'success']);
-    } catch (\Exception $e) {
-        return response()->json(['message' => 'Có lỗi xảy ra!', 'type' => 'error'], 500);
+        $item = $gioHang[$id];
+        return view('components.cart.edit-cart-modal', compact('item', 'id'));
     }
-}
+
+    public function update(Request $request, $id)
+    {
+        $gioHang = session('gioHang', []);
+        if (!isset($gioHang[$id])) {
+            return redirect()->back()->with('error', 'Sản phẩm không tồn tại.');
+        }
+
+        $gioHang[$id]['so_luong'] = $request->input('so_luong');
+        $gioHang[$id]['size'] = $request->input('size');
+        $gioHang[$id]['topping'] = $request->input('topping', []);
+
+        session(['gioHang' => $gioHang]);
+
+        return redirect()->route('cart.index')->with('success', 'Cập nhật sản phẩm thành công!');
+    }
 
 
     //Xóa sản phẩm khỏi giỏ hàng
@@ -130,27 +188,5 @@ class GioHangController extends Controller
         Session::forget("cart_$maTaiKhoan");
         return response()->json(['message' => 'Đã xóa toàn bộ giỏ hàng']);
     }
-    public function update(Request $request)
-    {
-        $maTaiKhoan = session('ma_tai_khoan', 1);
-        $gioHang = session("cart_$maTaiKhoan", []);
-
-        // Kiểm tra session có dữ liệu không
-        if (empty($gioHang)) {
-            return response()->json(['error' => 'Giỏ hàng trống hoặc session bị mất'], 400);
-        }
-
-        $maSanPham = $request->ma_san_pham;
-        $soLuong = $request->so_luong;
-
-        // Kiểm tra sản phẩm có tồn tại trong giỏ hàng không
-        if (!isset($gioHang[$maSanPham])) {
-            return response()->json(['error' => 'Sản phẩm không tồn tại trong giỏ hàng'], 400);
-        }
-
-        // Debug dữ liệu nhận được
-        dd($request->all());
-    }
-
 
 }
