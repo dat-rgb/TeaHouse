@@ -12,57 +12,61 @@ use App\Events\CartUpdated;
 
 class GioHangController extends Controller
 {
-    public function getCartCount()
-    {
-        // Giả sử giỏ hàng được lưu trữ trong session
-        return session('cart', collect())->count();
-    }
 
     public function gioHang()
-    {
-        $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
+{
+    $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
 
-        // Lấy giỏ hàng từ session
-        $cart = session()->get("cart_{$maTaiKhoan}", []);
+    // Lấy giỏ hàng từ session
+    $cart = session()->get("cart_{$maTaiKhoan}", []);
 
-        if (empty($cart)) {
-            return view('Home.giohang', ['gioHang' => []]);
-        }
-
-        // Lọc danh sách ID chỉ khi key tồn tại
-        $maSanPhams = collect($cart)->pluck('ma_san_pham')->filter()->unique()->toArray();
-        $maSizes = collect($cart)->pluck('size')->filter()->unique()->toArray();
-        $maToppings = collect($cart)->pluck('toppings')->flatten()->filter()->unique()->toArray();
-
-        // Truy vấn dữ liệu từ database
-        $sanPhams = SanPham::whereIn('ma_san_pham', $maSanPhams)->get()->keyBy('ma_san_pham');
-        $sizes = Sizes::whereIn('ma_size', $maSizes)->get()->keyBy('ma_size');
-        $toppings = Topping::whereIn('ma_topping', $maToppings)->get()->keyBy('ma_topping');
-
-        // Xây dựng giỏ hàng đầy đủ thông tin
-        $gioHang = [];
-        foreach ($cart as $cartKey => $item) {
-            // Kiểm tra key tồn tại trước khi truy xuất
-            if (!isset($item['ma_san_pham'], $item['size'], $item['toppings'])) {
-                continue;
-            }
-
-            $gioHang[] = [
-                'cart_key' => $cartKey,
-                'san_pham' => $sanPhams[$item['ma_san_pham']] ?? null,
-                'size' => $sizes[$item['size']] ?? null,
-                'toppings' => collect($item['toppings'])->map(fn($id) => $toppings[$id] ?? null)->filter(),
-                'so_luong' => $item['so_luong'] ?? 1,
-                'gia' => $item['gia'] ?? 0,
-            ];
-            $viewData = [
-                'title' => 'Giỏ Hàng | Tea House coffee & Tea', 
-                'gioHang' => $gioHang   
-            ];
-        }
-
-        return view('Home.giohang', $viewData);
+    if (empty($cart)) {
+        return view('Home.giohang', ['gioHang' => [], 'tongTien' => 0]);
     }
+
+    // Lọc danh sách ID chỉ khi key tồn tại
+    $maSanPhams = collect($cart)->pluck('ma_san_pham')->filter()->unique()->toArray();
+    $maSizes = collect($cart)->pluck('size')->filter()->unique()->toArray();
+    $maToppings = collect($cart)->pluck('toppings')->flatten()->filter()->unique()->toArray();
+
+    // Truy vấn dữ liệu từ database
+    $sanPhams = SanPham::whereIn('ma_san_pham', $maSanPhams)->get()->keyBy('ma_san_pham');
+    $sizes = Sizes::whereIn('ma_size', $maSizes)->get()->keyBy('ma_size');
+    $toppings = Topping::whereIn('ma_topping', $maToppings)->get()->keyBy('ma_topping');
+
+    // Xây dựng giỏ hàng đầy đủ thông tin và tính tổng tiền
+    $gioHang = [];
+    $tongTien = 0; // Khởi tạo tổng tiền
+
+    foreach ($cart as $cartKey => $item) {
+        // Kiểm tra key tồn tại trước khi truy xuất
+        if (!isset($item['ma_san_pham'], $item['size'], $item['toppings'])) {
+            continue;
+        }
+
+        // Tính giá trị sản phẩm
+        $giaSanPham = $sanPhams[$item['ma_san_pham']] ?? 0;
+        $giaSize = $sizes[$item['size']] ?? 0;
+        $giaTopping = collect($item['toppings'])->map(fn($id) => $toppings[$id] ?? 0)->sum('gia_topping');
+        $tongTienSanPham = ($giaSanPham->gia ?? 0 + $giaSize->gia_size ?? 0 + $giaTopping) * $item['so_luong'];
+        
+        // Cộng dồn vào tổng tiền
+        $tongTien += $tongTienSanPham;
+
+        $gioHang[] = [
+            'cart_key' => $cartKey,
+            'san_pham' => $sanPhams[$item['ma_san_pham']] ?? null,
+            'size' => $sizes[$item['size']] ?? null,
+            'toppings' => collect($item['toppings'])->map(fn($id) => $toppings[$id] ?? null)->filter(),
+            'so_luong' => $item['so_luong'] ?? 1,
+            'gia' => $item['gia'] ?? 0,
+            'tongTienSanPham' => $tongTienSanPham, // Thêm thông tin về thành tiền của từng sản phẩm
+        ];
+    }
+
+    return view('Home.giohang', compact('gioHang', 'tongTien')); // Trả về giỏ hàng và tổng tiền
+}
+
     //Thêm sản phẩm vào giỏ hàng
     public function addToCart(Request $request)
 {
@@ -101,7 +105,6 @@ class GioHangController extends Controller
         }
 
         session()->put("cart_{$maTaiKhoan}", $cart);
-     
         return response()->json(['message' => 'Đã thêm vào giỏ hàng!', 'type' => 'success']);
     } catch (\Exception $e) {
         return response()->json(['message' => 'Có lỗi xảy ra!', 'type' => 'error'], 500);

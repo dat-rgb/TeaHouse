@@ -17,9 +17,10 @@ return new class extends Migration
             $table->float('gia')->default(0);
             $table->string('slug', 150)->unique();
             $table->integer('thu_tu')->default(0); 
+            $table->integer('hot')->default(0); // 1: hot, 0: không hot (nổi bật)
             $table->text('mo_ta')->nullable();
             $table->string('hinh_anh', 255)->nullable();
-            $table->unsignedBigInteger('ma_danh_muc'); // Liên kết danh mục
+            $table->unsignedBigInteger('ma_danh_muc'); 
             $table->tinyInteger('trang_thai')->default(1); // 1: Đang bán, 0: Ngừng bán
             $table->timestamps();
 
