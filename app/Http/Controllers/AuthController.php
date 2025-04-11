@@ -13,9 +13,6 @@ class AuthController extends Controller {
         return view('auth.login');
     }
     // Hiển thị form đăng ký
-    public function showRegisterForm() {
-        return view('auth.register');
-    }
     public function login(Request $request) {
         $request->validate([
             'email' => 'required|email',
@@ -36,8 +33,6 @@ class AuthController extends Controller {
 
         return back()->withErrors(['error' => 'Sai email hoặc mật khẩu'])->withInput();
     }
-
-
     // Xử lý đăng xuất
     public function logout() {
         Auth::logout();

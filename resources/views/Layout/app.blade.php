@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,31 +6,40 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+
     <!-- Favicon -->
-    <link href="{{asset('img/logo.png')}}" rel="icon">
-    <!-- Google Web Fonts -->
+    <link href="{{ asset('img/logo.png') }}" rel="icon">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Pusher (nếu đang dùng real-time, giữ lại) -->
     <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
 
     <!-- Libraries Stylesheet -->
-    <link href="{{asset('lib/animate/animate.min.css')}}" rel="stylesheet">
-    <!-- Owl Carousel CSS -->
+    <link href="{{ asset('lib/animate/animate.min.css') }}" rel="stylesheet">
+
+    <!-- Owl Carousel -->
     <link rel="stylesheet" href="{{ asset('owl-carousel/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('owl-carousel/owl.theme.default.min.css') }}">
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
-    <!-- Template Stylesheet -->
-    <link href="{{asset('css/style.css')}}" rel="stylesheet">
-    @stack('styles')
 
+    <!-- Bootstrap -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    @stack('styles')
 </head>
+
 <body>
     @if(session('success'))
         <script>

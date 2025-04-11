@@ -32,8 +32,8 @@ Route::post('/register', [RegisterController::class, 'register'])->name('auth.re
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //Home
-Route::prefix('home')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::prefix('/')->group(function () {
+    Route::get('', [HomeController::class, 'index'])->name('home.index');
     Route::get('/lien-he', [HomeController::class, 'contact'])->name('home.contact');
     Route::get('/gioi-thieu', [HomeController::class, 'about'])->name('home.about');
     Route::get('/thuc-don', [HomeController::class, 'thucDon'])->name('home.thucdon');
