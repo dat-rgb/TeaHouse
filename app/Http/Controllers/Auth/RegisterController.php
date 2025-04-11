@@ -79,10 +79,7 @@ class RegisterController extends Controller
 
             Auth::login($user);
 
-            return redirect()->route('home.index')->with([
-                'message' => 'Đăng ký thành công!',
-                'type' => 'success'
-            ]);
+            return redirect()->route('home.index')->with('success', 'Đăng ký tài khoản thành công');
         } catch (\Exception $e) {
             DB::rollBack();
 

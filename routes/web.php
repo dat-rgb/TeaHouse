@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GioHangController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KhachHangController;
@@ -21,15 +20,15 @@ Route::get('/cart/count', function () {
     return response()->json(['soLuong' => $soLuong]);
 });
 // Trang đăng nhập
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 Route::get('google/login',[LoginController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback',[LoginController::class, 'handleGoogleCallback'])->name('google.callback');
 // Trang đăng ký
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('auth.register.show');
 Route::post('/register', [RegisterController::class, 'register'])->name('auth.register');
 // Đăng xuất
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Home
 Route::prefix('/')->group(function () {

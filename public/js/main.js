@@ -149,32 +149,20 @@ $('#add-to-cart').on('click', function() {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Đảm bảo DOM đã load xong
-    window.togglePassword = function(fieldId, button) {
-        const input = document.getElementById(fieldId);
-        const icon = button.querySelector("i");
+document.querySelectorAll('.toggle-password').forEach((btn) => {
+    btn.addEventListener('click', () => {
+        const input = btn.parentElement.querySelector('.password-input');
+        const isPassword = input.type === 'password';
 
-        if (input.type === "password") {
-            input.type = "text";
-            icon.classList.replace("fa-eye", "fa-eye-slash");
-        } else {
-            input.type = "password";
-            icon.classList.replace("fa-eye-slash", "fa-eye");
-        }
-    };
+        input.type = isPassword ? 'text' : 'password';
+        btn.textContent = isPassword ? 'Ẩn' : 'Hiện';
+    });
 });
-function togglePassword(fieldId, button) {
-    const input = document.getElementById(fieldId);
 
-    if (input.type === "password") {
-        input.type = "text";
-        button.textContent = "Ẩn";
-    } else {
-        input.type = "password";
-        button.textContent = "Hiện";
-    }
-}
+
+
+
+
 
 
 
