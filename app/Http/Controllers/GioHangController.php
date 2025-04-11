@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CuaHang;
 use App\Models\SanPham;
 use App\Models\Sizes;
 use App\Models\Topping;
@@ -13,6 +14,47 @@ use Str;
 
 class GioHangController extends Controller
 {
+    public function checkPro($ma_san_pham, $so_luong, $ma_size, $ma_cua_hang)
+    {
+        $thanhPhan = DB::table('thanh_phan_san_phams')
+            ->where('ma_san_pham', $ma_san_pham)
+            ->where('ma_size', $ma_size)
+            ->get();
+
+        if ($thanhPhan->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Sản phẩm không có công thức pha chế hoặc size không hợp lệ.'
+            ]);
+        }
+
+        $nguyenLieuThieu = [];
+
+        foreach ($thanhPhan as $tp) {
+            $nguyenLieuKho = DB::table('cua_hang_nguyen_lieus')
+                ->where('ma_cua_hang', $ma_cua_hang)
+                ->where('ma_nguyen_lieu', $tp->ma_nguyen_lieu)
+                ->first();
+
+            $tong_dinh_luong_can = $tp->dinh_luong * $so_luong;
+
+            if (!$nguyenLieuKho || $nguyenLieuKho->dinh_luong_ton < $tong_dinh_luong_can || $nguyenLieuKho->dinh_luong_ton < $nguyenLieuKho->dinh_luong_ton_min) {
+                $nguyenLieuThieu[] = $tp->ma_nguyen_lieu;
+            }
+        }
+
+        if (!empty($nguyenLieuThieu)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Không đủ nguyên liệu trong kho để pha chế sản phẩm.',
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Sản phẩm đủ nguyên liệu để                                                                                                                                                                                                                                                                                                                                                                                                        bán.'
+        ]);
+    }
 
     public function gioHang()
     {
