@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GioHangController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KhachHangController;
@@ -21,19 +20,19 @@ Route::get('/cart/count', function () {
     return response()->json(['soLuong' => $soLuong]);
 });
 // Trang đăng nhập
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 Route::get('google/login',[LoginController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback',[LoginController::class, 'handleGoogleCallback'])->name('google.callback');
 // Trang đăng ký
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('auth.register.show');
 Route::post('/register', [RegisterController::class, 'register'])->name('auth.register');
 // Đăng xuất
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Home
-Route::prefix('home')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::prefix('/')->group(function () {
+    Route::get('', [HomeController::class, 'index'])->name('home.index');
     Route::get('/lien-he', [HomeController::class, 'contact'])->name('home.contact');
     Route::get('/gioi-thieu', [HomeController::class, 'about'])->name('home.about');
     Route::get('/thuc-don', [HomeController::class, 'thucDon'])->name('home.thucdon');
@@ -63,9 +62,8 @@ Route::middleware('auth')->group(function () {
 Route::prefix('gio-hang')->group(function () {
     Route::get('/', [GioHangController::class, 'gioHang'])->name('giohang.index');
     Route::post('/them', [GioHangController::class, 'addToCart'])->name('giohang.add');
-    Route::post('/cart/update', [GioHangController::class, 'update'])->name('giohang.update');
-    Route::delete('/gio-hang/xoa/{maSanPham}', [GioHangController::class, 'removeFromCart'])->name('giohang.remove');
     Route::post('/xoa-tat-ca', [GioHangController::class, 'clearCart'])->name('giohang.clear');
+    Route::get('/cap-nhat/{key}/{type}', [GioHangController::class, 'updateQuantity'])->name('cart.updateQuantity');
 });
 
 

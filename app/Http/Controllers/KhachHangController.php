@@ -14,12 +14,12 @@ class KhachHangController extends Controller
     public function index()
     {
         $khachHang = KhachHang::with('taiKhoan')->where('ma_tai_khoan', Auth::id())->first();
-
+        $title = $khachHang->ho_ten_khach_hang . ' | Tea House Coffee & Tea'; 
+        
         if (!$khachHang) {
             return redirect()->route('home')->with('error', 'Không tìm thấy thông tin khách hàng.');
         }
-
-        return view('khachhang.index', compact('khachHang'));
+        return view('khachhang.index', compact('khachHang', 'title'));
     }
 
     /**
