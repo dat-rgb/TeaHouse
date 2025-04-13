@@ -18,6 +18,12 @@
     .product-card:hover .product-image {
         transform: scale(1.05);
     }
+   
+    .product-price {
+        font-size: 1.2rem;
+        color: #e44d26;
+        font-weight: bold;
+    }
 </style>
 
 <div class="row">
@@ -34,6 +40,7 @@
                 </div>
                 <div class="card-body text-center">
                     <h5 class="product-title">{{ $product->ten_san_pham }}</h5>
+                    <p class="product-price">{{ number_format($product->gia, 0, ',', '.') }} đ</p>
                 </div>
             </div>
         </div>

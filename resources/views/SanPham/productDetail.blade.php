@@ -21,20 +21,21 @@
         <div class="col-md-7">
             <h2 class="fw-bold mb-2">{{ $sanPham->ten_san_pham }}</h2>
             <p class="text-warning fs-5 fw-semibold mb-3">
-                Giá: <span id="gia-san-pham" data-gia="{{ $sanPham->gia }}">{{ number_format($sanPham->gia, 0, ',', '.') }}</span> đ
+                Giá: <span id="gia-san-pham" data-gia="{{ $sanPham->gia }}">{{ number_format($sanPham->gia, 0, ',', '.') }}</span> 
             </p>
-
-            <div class="mb-3">
-                <h6 class="fw-semibold mb-2">Chọn size (bắt buộc)</h6>
-                <div class="d-flex gap-2">
-                    @foreach ($sizes as $size)
-                        <label class="btn btn-outline-secondary btn-sm size-label">
-                            <input type="radio" name="size" value="{{ $size->ma_size }}" data-gia="{{ $size->gia_size }}" class="size-option d-none"> 
-                            {{ $size->ten_size }} + {{ number_format($size->gia_size, 0, ',', '.') }} đ
-                        </label>
-                    @endforeach
+            @if(count($sizes) >= 2)
+                <div class="mb-3">
+                    <h6 class="fw-semibold mb-2">Chọn size</h6>
+                    <div class="d-flex gap-2">
+                        @foreach ($sizes as $size)
+                            <label class="btn btn-outline-secondary btn-sm size-label">
+                                <input type="radio" name="size" value="{{ $size->ma_size }}" data-gia="{{ $size->gia_size }}" class="size-option d-none"> 
+                                {{ $size->ten_size }}
+                            </label>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
+            @endif
             <div class="mb-3">
                 <h6 class="fw-semibold mb-2">Số lượng</h6>
                 <input type="number" id="so-luong" class="form-control w-25" value="1" min="1">
@@ -116,11 +117,9 @@
             addToCartBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang thêm...';
 
             const sizeChecked = document.querySelector(".size-option:checked");
-            if (!sizeChecked) {
-                showNotification("Vui lòng chọn size trước khi thêm vào giỏ hàng!", "error");
-                resetButton();
-                return;
-            }
+
+            const size = sizeChecked ? sizeChecked.value : 1; // default 1 nếu không chọn
+
 
             const toppings = Array.from(document.querySelectorAll(".topping-option:checked"))
                                 .map(t => t.value); // Chỉ lấy mã topping
@@ -130,7 +129,7 @@
                 body: JSON.stringify({
                     ma_san_pham: "{{ $sanPham->ma_san_pham }}",
                     so_luong: document.getElementById("so-luong").value,
-                    size: sizeChecked.value, // Chỉ lấy mã size
+                    size: size, // Chỉ lấy mã size
                     toppings: toppings
                 }),
                 headers: {

@@ -159,7 +159,7 @@
                             </div>
                             <div class="text-center card-body">
                                 <h5 class="product-title">{{ $item->ten_san_pham }}</h5>
-                                <!-- <p class="product-price">{{ number_format($item->gia, 0, ',', '.') }} VNĐ</p> -->
+                                <p class="product-price">{{ number_format($item->gia, 0, ',', '.') }} đ</p>
                             </div>
                         </div>
                     </div>
