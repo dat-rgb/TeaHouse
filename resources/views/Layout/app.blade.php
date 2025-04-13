@@ -3,15 +3,17 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Tea House</title>
+    <title>@yield('title', 'Tea House')</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
     <!-- Favicon -->
-    <link href="{{asset('img/favicon.ico')}}" rel="icon">
+    <link href="{{asset('img/logo.png')}}" rel="icon">
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -25,8 +27,25 @@
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    @stack('styles')
+
 </head>
 <body>
+    @if(session('success'))
+        <script>
+            window.onload = function() {
+                showNotification("{{ session('success') }}", "success");
+            };
+        </script>
+    @endif
+
+    @if(session('error'))
+        <script>
+            window.onload = function() {
+                showNotification("{{ session('error') }}", "error");
+            };
+        </script>
+    @endif
     <!-- Spinner Start -->
     <div id="spinner" class="bg-white show position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
@@ -63,7 +82,7 @@
                             </div>
                         </div>
                         <a href="{{ route('home.thucdon') }}" class="nav-item nav-link">Thực đơn</a>
-                        <a href="" class="nav-item nav-link">Giới thiệu</a>
+                        <a href="{{ route('home.about') }}" class="nav-item nav-link">Giới thiệu</a>
                         <div class="nav-item dropdown">
                             <a href="" class="nav-link">Chuyện nhà <i class="bi bi-chevron-down"></i></a>
                             <div class="m-0 dropdown-menu bg-light rounded-0">
@@ -83,8 +102,9 @@
                         <!-- Nút giỏ hàng -->
                         <a href="{{ route('giohang.index') }}" class="btn btn-sm p-0 ms-3 position-relative" title="Giỏ hàng">
                             <i class="fa fa-shopping-cart fs-4"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
                                 {{ $soLuongGioHang }}
+                            </span> 
                         </a>
                         <!-- Nút đăng nhập với dropdown -->
                         <div class="dropdown d-inline-block ms-3">
@@ -102,7 +122,7 @@
                                     </form>
                                 @else
                                     <li><a class="cursor-pointer dropdown-item" onclick="openLoginPopup()">Đăng nhập</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('register') }}">Đăng ký</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('auth.register.show') }}">Đăng ký</a></li>
                                 @endauth
                             </ul>
                         </div>
@@ -183,6 +203,7 @@
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{asset('lib/wow/wow.min.js')}}"></script>
     <script src="{{asset('lib/easing/easing.min.js')}}"></script>
     <script src="{{asset('lib/waypoints/waypoints.min.js')}}"></script>
@@ -192,5 +213,7 @@
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <!-- Template Javascript -->
     <script src="{{asset('js/main.js')}}"></script>
+    @stack('scripts')
+
 </body>
 </html>

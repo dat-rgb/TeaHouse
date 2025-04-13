@@ -9,13 +9,23 @@ class HomeController extends Controller
 {
     public function index(){
         $viewData = [
-            "title" => "Trang chủ",
+            "title" => "Trang chủ | Tea House Coffee & Tea",
         ];
-        return view('Home.index');
+        return view('Home.index', $viewData);
     }
 
     public function contact(){
-        return view('Home.lienHe');
+        $viewData = [
+            'title' => 'Liên Hệ  | Tea House Coffee & Tea'
+        ];
+        return view('Home.lienHe', $viewData);
+    }
+
+    public function about(){
+        $viewData = [
+            'title' => 'Giới Thiệu  | Tea House Coffee & Tea'
+        ];
+        return view('Home.gioiThieu', $viewData);
     }
     public function thucDon()
     {
@@ -29,6 +39,10 @@ class HomeController extends Controller
 
         return view('Home.thucDon', compact('viewData', 'tra', 'caPhe', 'sinhTo', 'nuocEp'));
     }
-
-
+    public function notfound(){
+        $viewData = [
+            'title' => 'Không tìm thấy trang!'    
+        ];
+        return view('Home.404', $viewData);
+    }
 }

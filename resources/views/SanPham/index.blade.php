@@ -1,5 +1,5 @@
 @extends('Layout.app')
-
+@section('title', $title)
 @section('content')
 <!-- Banner -->
 <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
@@ -25,22 +25,5 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('.category-filter').click(function (e) {
-            e.preventDefault();
-            let maDanhMuc = $(this).data('id');
-
-            $.ajax({
-                url: "{{ route('sanpham.filter') }}",
-                type: "GET",
-                data: { ma_danh_muc: maDanhMuc },
-                success: function (response) {
-                    $('#product-list').html(response);
-                }
-            });
-        });
-    });
-</script>
 
 @endsection

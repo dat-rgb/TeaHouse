@@ -128,11 +128,51 @@ class NguyenLieuSeeder extends Seeder
                 'loai_nguyen_lieu' => 0, 
                 'don_vi' => 'Chai 1,3kg'
             ],
-            //14
-            //15
-            //16
-            //17
-            //18
+            //14 LY NHỰA PET NẮP CẦU 350ML/ THÙNG (1000 LY)	1.020.000 ₫	Thùng 1000ly
+            [
+                'ten_nguyen_lieu' => 'LY NHỰA PET NẮP CẦU 350ML/ THÙNG (1000 LY)', 
+                'ma_nha_cung_cap' => 3, 
+                'dinh_luong' => 1000,
+                'gia'=> 1020000,
+                'loai_nguyen_lieu' => 1, 
+                'don_vi' => 'THÙNG (1000 LY)'
+            ],
+            //15 LY NHỰA PET NẮP CẦU 500ML/ THÙNG (1000 LY)	1.070.000 ₫	Thùng 1000ly
+            [
+                'ten_nguyen_lieu' => 'LY NHỰA PET NẮP CẦU 500ML/ THÙNG (1000 LY)', 
+                'ma_nha_cung_cap' => 3, 
+                'dinh_luong' => 1000,
+                'gia'=> 1070000,
+                'loai_nguyen_lieu' => 1, 
+                'don_vi' => 'THÙNG (1000 LY)'
+            ],
+            //16 LY NHỰA PET NẮP CẦU 700ML/ THÙNG (1000 LY)	1.400.000 ₫	Thùng 1000ly
+            [
+                'ten_nguyen_lieu' => 'LY NHỰA PET NẮP CẦU 700ML/ THÙNG (1000 LY)', 
+                'ma_nha_cung_cap' => 3, 
+                'dinh_luong' => 1000,
+                'gia'=> 1400000,
+                'loai_nguyen_lieu' => 1, 
+                'don_vi' => 'THÙNG (1000 LY)'
+            ],
+            //17 Ly giấy 12oz - 360ml	753.000 ₫	Thùng 1000ly
+            [
+                'ten_nguyen_lieu' => 'Ly giấy 12oz - 360ml', 
+                'ma_nha_cung_cap' => 3, 
+                'dinh_luong' => 1000,
+                'gia'=> 753000,
+                'loai_nguyen_lieu' => 1, 
+                'don_vi' => 'THÙNG (1000 LY)'
+            ],
+            //18 Nắp nóng đen	529.000 ₫	Thùng 1000 Cái
+            [
+                'ten_nguyen_lieu' => 'Nắp nóng đen', 
+                'ma_nha_cung_cap' => 3, 
+                'dinh_luong' => 1000,
+                'gia'=> 529000,
+                'loai_nguyen_lieu' => 1, 
+                'don_vi' => 'THÙNG (1000 CÁI)'
+            ],
             //19
             //20
             //21
