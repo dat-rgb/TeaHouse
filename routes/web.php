@@ -64,6 +64,8 @@ Route::prefix('gio-hang')->group(function () {
     Route::post('/them', [GioHangController::class, 'addToCart'])->name('giohang.add');
     Route::post('/xoa-tat-ca', [GioHangController::class, 'clearCart'])->name('giohang.clear');
     Route::get('/cap-nhat/{key}/{type}', [GioHangController::class, 'updateQuantity'])->name('cart.updateQuantity');
+    Route::post('/edit-modal', [GioHangController::class, 'showEditModal'])->name('cart.edit-modal');
+
 });
 
 

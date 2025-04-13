@@ -99,6 +99,7 @@ class GioHangController extends Controller
                 'cart_key' => $key,
                 'ma_san_pham' => $item['ma_san_pham'],
                 'ten_san_pham' => $sanPham->ten_san_pham ?? '[SP không tồn tại]',
+              
                 'hinh_anh' => $sanPham->hinh_anh ?? 'default.jpg',
                 'gia' => $giaSP + $giaSize + $giaTopping,
                 'tongTienSanPham' => $tongTienSP,
@@ -215,4 +216,29 @@ class GioHangController extends Controller
 
         return redirect()->route('giohang.index')->with('success', 'Đã xoá toàn bộ giỏ hàng.');
     }
+    // CartController.php
+    public function showEditModal(Request $request)
+    {
+        $rowId = $request->input('rowId');
+        $maTaiKhoan = auth()->check() ? auth()->user()->ma_tai_khoan : 1;
+        $cart = session()->get("cart_{$maTaiKhoan}", []);
+        $item = $cart[$rowId] ?? null;
+        dd($rowId);  // Add this to check if $rowId is being set properly
+
+        if (!$item) {
+            return response()->json(['error' => 'Không tìm thấy sản phẩm'], 404);
+        }
+
+        $sizes = Sizes::where('ma_san_pham', $item['id'])->get();
+        $toppings = Topping::all();
+
+        // Make sure to pass $rowId correctly
+        return view('components.cart.edit-cart-modal', [
+            'item' => $item,
+            'rowId' => $rowId,   // Ensure this line is included
+            'sizes' => $sizes,
+            'toppings' => $toppings
+        ]);
+    }
+
 }

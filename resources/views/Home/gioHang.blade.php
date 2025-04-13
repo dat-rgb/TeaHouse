@@ -44,8 +44,10 @@
                                     <td>{{ $i++ }}</td>
                                     <td>
                                         <div class="d-flex align-items-center gap-3">
-                                            <img src="{{ asset('img/product/' . ($item['hinh_anh'] ?? 'default.jpg')) }}"
+                                            <a href="" class="">
+                                                <img src="{{ asset('img/product/' . ($item['hinh_anh'] ?? 'default.jpg')) }}"
                                                 class="rounded shadow-sm border" style="width: 70px; height: 70px; object-fit: cover;">
+                                            </a>
                                             <div>
                                                 <div class="fw-semibold">{{ $item['ten_san_pham'] }}</div>
                                                 <small class="text-muted">Size: {{ $item['size_ten'] }}</small>
@@ -61,23 +63,23 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
-                                            @foreach($gioHang as $key => $item)
-                                                <div class="btn-group align-items-center" role="group">
-                                                    <a href="{{ route('cart.updateQuantity', ['key' => $key, 'type' => 'decrease']) }}"
-                                                    class="btn btn-outline-secondary btn-sm">−</a>
-                                                    
-                                                    <span class="px-3 d-flex align-items-center">{{ $item['so_luong'] }}</span>
-                                                    
-                                                    <a href="{{ route('cart.updateQuantity', ['key' => $key, 'type' => 'increase']) }}"
-                                                    class="btn btn-outline-secondary btn-sm">+</a>
-                                                </div>
-                                            @endforeach
+                                           
+                                            <div class="btn-group align-items-center" role="group">
+                                                <a href="{{ route('cart.updateQuantity', ['key' => $key, 'type' => 'decrease']) }}"
+                                                class="btn btn-outline-secondary btn-sm">−</a>
+                                                
+                                                <span class="px-3 d-flex align-items-center">{{ $item['so_luong'] }}</span>
+                                                
+                                                <a href="{{ route('cart.updateQuantity', ['key' => $key, 'type' => 'increase']) }}"
+                                                class="btn btn-outline-secondary btn-sm">+</a>
+                                            </div>
+                                           
                                         </div>
                                     </td>
                                     <td>{{ number_format($item['gia'], 0, ',', '.') }} đ</td>
                                     <td>{{ number_format($thanhTien, 0, ',', '.') }} đ</td>
                                     <td class="text-center">
-                                        <button class="btn btn-warning btn-sm" onclick="openEditModal('{{ $key }}')">
+                                        <button class="btn btn-warning btn-sm">
                                             <i class="bi bi-pencil-square"></i> Sửa
                                         </button>
                                         <a class="text-danger" href="#">Xóa</a>
@@ -133,7 +135,6 @@
         </div>
     @endif
 </div>
-
 @endsection
 
 

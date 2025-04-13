@@ -35,7 +35,7 @@ class RegisterController extends Controller
             'so_dien_thoai' => 'nullable|unique:tai_khoan,so_dien_thoai',
             'mat_khau' => [
                 'required',
-                'min:6',
+                'min:8',
                 'max:24',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,24}$/'
             ],
