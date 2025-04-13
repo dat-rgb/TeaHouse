@@ -3,6 +3,20 @@
 @section('content')
 
 <style>/* Thiết lập font và màu */
+
+    body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            background-image: url('/img/banner.png'); /* có thể là ảnh trong thư mục hoặc URL ảnh online */
+            background-size: cover;       /* hình ảnh bao phủ toàn bộ */
+            background-repeat: no-repeat; /* không lặp lại ảnh */
+            background-position: center;  /* canh giữa hình ảnh */
+            background-attachment: fixed; /* cố định hình ảnh khi cuộn trang */
+            height: 100vh;                /* đảm bảo chiếm toàn bộ chiều cao màn hình */
+            margin: 0;
+        }
+
     .header-logo, h2 {
         color: #2c6e49;
         text-align: center;
@@ -11,7 +25,7 @@
 
     .header-logo {
         font-family: "Brush Script MT", cursive;
-        font-size: 32px;
+        font-size: 50px;
         font-weight: bold;
     }
 
@@ -124,7 +138,13 @@
 
     .hidden { display: none; }
 </style>
-<div class="container" style="padding: 70px;" >
+<!-- Banner -->
+<div class="py-5 mb-5 container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5 text-center">
+        <h2 class="mb-4 display-2 text-dark animated slideInDown">{{ $viewData['title'] }}</h2>
+    </div>
+</div>
+<div class="container" style="padding: 70px;">
     <h1 class="text-center">{{ $viewData['title'] }}</h1>
     <h2 class="header-logo">Tea House</h2>
     @php
@@ -204,9 +224,4 @@
     });
 });
 </Script>
-
-
-
-
-
 @endsection
